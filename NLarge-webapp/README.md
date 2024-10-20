@@ -1,6 +1,12 @@
-# Next App Mantine Tailwind Template
+# Next App Mantine Tailwind - NLarge
 
-This is a minimal template for a Next.js project with Mantine and Tailwind CSS.
+This application is designed to solve the challenge of small natural language datasets. It automatically augments your data with proven methods to improve your model. To get started,
+
+## First Time Setup
+
+```bash
+npm install
+```
 
 ## Development
 
