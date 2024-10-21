@@ -15,5 +15,5 @@
 
 /* For dark mode */
 :root[data-mantine-color-scheme="dark"] body {
-  --mantine-color-body: #282827;
+  --mantine-color-body: #1d192b;
 }
