@@ -18,6 +18,7 @@ npm run dev
 
 ## More information
 
+- [NLarge Figma Mockup](https://www.figma.com/design/sTI7odXsC76w0GumYEa7YB/Text-Dataset-Augmentation?node-id=29-3&t=YZRkgjlQ9qUmdX0n-1)
 - [Mantine](https://mantine.dev/)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [tailwind-preset-mantine](https://github.com/songkeys/tailwind-preset-mantine)
