@@ -11,7 +11,7 @@ export function NavBar() {
   });
   const isDark = colorScheme === "dark";
   return (
-    <Group className="h-full px-md justify-between">
+    <Group className="h-full px-16 justify-between">
       <Group
         className="w-auto dark:fill-blue"
         onClick={() => console.log("clicked")}
@@ -21,22 +21,18 @@ export function NavBar() {
           width="50"
           height="50"
           stroke="4"
-          color={isDark ? "#fff" : "#000"}
+          color={isDark ? "#D0BCFF" : "#7363AD"}
         />
-        <Text size="xl" fw={700}>
+        <Text size="xl" fw={700} c="secondary">
           NLarge
         </Text>
       </Group>
       <Group>
         <ColorSchemesSwitcher />
-        <Button
-          variant="outline"
-          size="compact-md"
-          className="border-purple-400 text-gray-900 dark:border-purple-600 dark:text-gray-200"
-        >
+        <Button variant="outline" size="compact-md" color="secondary">
           <GitHubLogoIcon />
         </Button>
-        <Button className="bg-purple-400 text-gray-900 dark:bg-purple-600 dark:text-gray-200">
+        <Button variant="outline" size="compact-md" color="secondary">
           <HamburgerMenuIcon />
         </Button>
       </Group>
