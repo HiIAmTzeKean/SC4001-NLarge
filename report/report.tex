@@ -1,0 +1,85 @@
+\documentclass{article}
+
+\title{Your Research Title}
+
+\author{
+  Tze Kean \\
+  \texttt{ngtzekean@gmail.com}
+  \and
+  Dexter \\
+  \texttt{dexter@email.com}
+}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+  % Your abstract here
+\end{abstract}
+
+\section{Introduction}
+% Your introduction here
+
+\section{Related Work}
+% Literature review
+
+\section{Methodology}
+
+\subsection{Data Augmentation using LLMs}
+
+To enhance the diversity and robustness of our dataset, we employed a data
+augmentation technique leveraging pre-trained Large Language Models (LLM) from
+the Transformers library.
+
+Specifically, we utilized the model to generate synthetic data samples by
+providing prompts based on existing training examples. By carefully controlling
+the generation parameters, we were able to produce high-quality, diverse, and
+relevant augmented samples that expanded the scope of our training data,
+potentially improving model generalization and performance.
+
+\subsubsection{LLM selection}
+
+We would like to note some of the challenges of selection of the LLM model for
+data augmentation. The choice of the model is crucial as it determines the
+quality of the generated samples. We experimented with several models, including
+GPT-2, GPT-3, and T5. As we tried to perform prompt engineering to generate
+diverse samples, we found that these models could not adequately paraphrase
+the training data, more often than not, producing the exact same text or
+slightly modified versions of the original text.
+
+We suspect that these LLM do not perform well due to the lack of contextual
+information in the prompt. We hypothesize that the models require more
+contextual information to generate diverse samples. We realised that a model
+that allows us to specify a role for the prompt, we would be able to generate
+more diverse samples.
+
+\subsubsection{Prompt Engineering}
+
+We proceeded to experiment with the Qwen model, with some of the techniques applied
+from \cite{promptingguide}. We found that the Qwen model allows us to specify
+a role for the prompt, which allows us to instruct the model to specifically only
+paraphrase the verbs and structure of the sentence. This allows us to generate
+a text that differs from the original text, while still retaining the meaning
+of the original text.
+
+
+\subsection{Model Architecture}
+% Describe your model (e.g., RNN, Transformer)
+
+\subsection{Training and Evaluation}
+% Training process, evaluation metrics
+
+\section{Results}
+% Present your experimental results
+
+\section{Discussion}
+% Analyze and interpret your results
+
+\section{Conclusion}
+% Summarize your findings and future work
+
+\bibliographystyle{plain}
+\bibliography{bibliography.bib}
+
+\end{document}
