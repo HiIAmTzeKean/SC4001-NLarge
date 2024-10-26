@@ -71,7 +71,7 @@ class WordsUtil:
         startpos = 0
         for t in tokens:
             # create a token object with its start position in the document
-            token_obj = Token(token=t, start_pos=startpos + self.words[startpos:].find(t))
+            token_obj = Token(token=t, startpos=startpos + self.words[startpos:].find(t))
             # Wrap the Token in a ChangeLog for tracking changes
             change_log = self.ChangeLog(orig_token=token_obj)
             objs.append(change_log)
