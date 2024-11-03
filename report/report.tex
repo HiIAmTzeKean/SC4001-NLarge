@@ -1,12 +1,22 @@
 \documentclass{article}
+\usepackage{geometry}
+\usepackage{parskip}
+\usepackage{graphicx}
+\usepackage{pythonhighlight}
+\newcommand{\code}[1]{\texttt{#1}}
 
-\title{Your Research Title}
+\geometry{
+  a4paper,
+  margin=1in
+}
+
+\title{NLarge your dataset: Data Augmentation for NLP}
 
 \author{
-  Tze Kean \\
+  Ng Tze Kean \\
   \texttt{ngtzekean@gmail.com}
   \and
-  Dexter \\
+  Dexter Gui \\
   \texttt{dexter@email.com}
 }
 
@@ -15,7 +25,22 @@
 \maketitle
 
 \begin{abstract}
-  % Your abstract here
+
+  In this report, we explore the application of data augmentation techniques for
+  Natural Language Processing (NLP) using a variety of methods including
+  Large Language Models (LLMs). We demonstrate the effectiveness of these
+  techniques in enhancing the diversity and robustness of the training data,
+  potentially improving the performance of NLP models. We present our
+  methodology, experimental results, and discuss the implications of our
+  findings.
+
+  Overall, we found that use of statistical methods such as substitution for 
+  data augmentation has limited applications. The use of more advanced deep
+  learning models such as RNN with attention mechanisms tend to perform better
+  in this task. The best results were obtained using Large Language Models
+  (LLMs) for data augmentation, which significantly improved the performance of
+  the model.
+
 \end{abstract}
 
 \section{Introduction}
@@ -42,11 +67,11 @@ potentially improving model generalization and performance.
 
 We would like to note some of the challenges of selection of the LLM model for
 data augmentation. The choice of the model is crucial as it determines the
-quality of the generated samples. We experimented with several models, including
-GPT-2, GPT-3, and T5. As we tried to perform prompt engineering to generate
-diverse samples, we found that these models could not adequately paraphrase
-the training data, more often than not, producing the exact same text or
-slightly modified versions of the original text.
+quality of the generated samples. We experimented with several models,
+including GPT-2, GPT-3, and T5. As we tried to perform prompt engineering to
+generate diverse samples, we found that these models could not adequately
+paraphrase the training data, more often than not, producing the exact same
+text or slightly modified versions of the original text.
 
 We suspect that these LLM do not perform well due to the lack of contextual
 information in the prompt. We hypothesize that the models require more
@@ -56,13 +81,12 @@ more diverse samples.
 
 \subsubsection{Prompt Engineering}
 
-We proceeded to experiment with the Qwen model, with some of the techniques applied
-from \cite{promptingguide}. We found that the Qwen model allows us to specify
-a role for the prompt, which allows us to instruct the model to specifically only
-paraphrase the verbs and structure of the sentence. This allows us to generate
-a text that differs from the original text, while still retaining the meaning
-of the original text.
-
+We proceeded to experiment with the Qwen model, with some of the techniques
+applied from \cite{promptingguide}. We found that the Qwen model allows us to
+specify a role for the prompt, which allows us to instruct the model to
+specifically only paraphrase the verbs and structure of the sentence. This
+allows us to generate a text that differs from the original text, while still
+retaining the meaning of the original text.
 
 \subsection{Model Architecture}
 % Describe your model (e.g., RNN, Transformer)
