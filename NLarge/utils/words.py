@@ -1,4 +1,4 @@
-from utils.Token import Token
+from NLarge.utils.Token import Token
 
 class WordsUtil: 
     # Track changes for each token
