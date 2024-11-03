@@ -1,5 +1,7 @@
 import random
+import logging
 
+loggers = logging.getLogger(__name__)
 
 class Action:
     """
@@ -15,7 +17,10 @@ class Action:
     SWAP = 'swap'
     CROP = 'crop'
 
-class RandomAugment():
+class RandomAugmenter():
+    def __init__(self):
+        loggers.info("RandomAugmenter initialized")
+        
     def __call__(self, data, action, aug_percent=0.3, aug_min=1, aug_max=10, skipwords=None, target_words=None):
         """
         Random text augmentation function.

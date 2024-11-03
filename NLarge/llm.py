@@ -11,9 +11,10 @@ class LLMAugmenter():
         self.model_name: str
         self.model:AutoModelForCausalLM
         self.tokenizer:AutoTokenizer
+        loggers.info("LLMAugmenter initialized")
          
     def init_qn_ans_model(self):
-        self.model_name = "Qwen/Qwen2.5-1.5B-QnA"
+        self.model_name = "Qwen/Qwen2.5-1.5B-Instruct"
         self.model = AutoModelForCausalLM.from_pretrained(
             self.model_name,
             torch_dtype="auto",
