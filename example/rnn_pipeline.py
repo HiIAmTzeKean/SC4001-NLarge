@@ -16,6 +16,33 @@ class TextClassifierRNN(nn.Module):
         self.embedding = nn.Embedding(vocab_size, embedding_dim)
         self.rnn = nn.RNN(embedding_dim, hidden_dim, n_layers, batch_first=True)
         self.fc = nn.Linear(hidden_dim, output_dim)
+        self.sigmoid = nn.Sigmoid()
+
+    def forward(self, x, lengths):
+        embedded = self.embedding(x)
+        
+        # Pack the embedded sequences
+        packed_embedded = rnn_utils.pack_padded_sequence(embedded, lengths, batch_first=True, enforce_sorted=False)
+  
+        packed_output, _ = self.rnn(packed_embedded)
+        output, _ = nn.utils.rnn.pad_packed_sequence(packed_output, batch_first=True)
+        
+        # get last hidden state with list slice
+        output = output[:, -1, :]
+        
+        # sigmoid
+        output = self.fc(output)
+        # pass to sigmoid
+        sig_out = self.sigmoid(output)
+        sig_out = sig_out.squeeze(1)
+        return sig_out
+    
+class TextClassifierRNNMaxPool(nn.Module):
+    def __init__(self, vocab_size, embedding_dim, hidden_dim, output_dim, n_layers):
+        super(TextClassifierRNN, self).__init__()
+        self.embedding = nn.Embedding(vocab_size, embedding_dim)
+        self.rnn = nn.RNN(embedding_dim, hidden_dim, n_layers, batch_first=True)
+        self.fc = nn.Linear(hidden_dim, output_dim)
 
 
     def forward(self, x, lengths):
@@ -27,11 +54,17 @@ class TextClassifierRNN(nn.Module):
         # Pass through the RNN
         packed_output, hidden = self.rnn(packed_embedded)
         
-        # Use the hidden state from the last layer
-        hidden = hidden[-1,:,:]
+        packed_output, _ = self.rnn(packed_embedded)
+        output, _ = nn.utils.rnn.pad_packed_sequence(packed_output, batch_first=True)
+        # max pool on output
+        output, _ = torch.max(output, dim=1)
         
-        # Pass the hidden state through the fully connected layer
-        return self.fc(hidden)
+        # sigmoid
+        output = self.fc(output)
+        # pass to sigmoid
+        sig_out = self.sigmoid(output)
+        sig_out = sig_out.squeeze(1)
+        return sig_out
     
 class TextClassificationPipeline:
     def __init__(self, augmented_data, test_data, max_length, test_size, batch_size=512, 
@@ -109,7 +142,9 @@ class TextClassificationPipeline:
         )
         return data_loader
 
-    def train(self, dataloader, model, criterion, optimizer, device=self.device):
+    def train(self, dataloader, model, criterion, optimizer, device='cpu'):
+        if self.device:
+            device = self.device
         model.train()
         epoch_losses = []
         epoch_accs = []
@@ -129,7 +164,9 @@ class TextClassificationPipeline:
             epoch_accs.append(accuracy.item())
         return np.mean(epoch_losses), np.mean(epoch_accs)
 
-    def evaluate(self, dataloader, model, criterion, device=self.device):
+    def evaluate(self, dataloader, model, criterion, device='cpu'):
+        if self.device:
+            device = self.device
         model.eval()
         epoch_losses = []
         epoch_accs = []
@@ -191,7 +228,7 @@ class TextClassificationPipeline:
         vocab_size = len(self.vocab)
         output_dim = len(self.train_data.unique("label"))
 
-        self.model = TextClassifierRNN(
+        self.model = TextClassifierRNNMaxPool(
             vocab_size,
             self.embedding_dim,
             self.hidden_dim,
