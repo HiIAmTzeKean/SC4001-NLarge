@@ -11,9 +11,10 @@ from nltk.tokenize import word_tokenize
 import tqdm
 
 class TextClassifierRNN(nn.Module):
-    def __init__(self, vocab_size, embedding_dim, hidden_dim, output_dim, n_layers):
+    def __init__(self, vocab_size, embedding_dim, hidden_dim, output_dim, n_layers, pretrained_embedding):
         super(TextClassifierRNN, self).__init__()
-        self.embedding = nn.Embedding(vocab_size, embedding_dim)
+        # use pretrained embeddings
+        self.embedding = nn.Embedding.from_pretrained(pretrained_embedding, freeze=False)
         self.rnn = nn.RNN(embedding_dim, hidden_dim, n_layers, batch_first=True)
         self.fc = nn.Linear(hidden_dim, output_dim)
         self.sigmoid = nn.Sigmoid()
@@ -38,9 +39,9 @@ class TextClassifierRNN(nn.Module):
         return sig_out
     
 class TextClassifierRNNMaxPool(nn.Module):
-    def __init__(self, vocab_size, embedding_dim, hidden_dim, output_dim, n_layers):
+    def __init__(self, vocab_size, embedding_dim, hidden_dim, output_dim, n_layers, pretrained_embedding):
         super(TextClassifierRNN, self).__init__()
-        self.embedding = nn.Embedding(vocab_size, embedding_dim)
+        self.embedding = nn.Embedding.from_pretrained(pretrained_embedding, freeze=False)
         self.rnn = nn.RNN(embedding_dim, hidden_dim, n_layers, batch_first=True)
         self.fc = nn.Linear(hidden_dim, output_dim)
 
@@ -228,14 +229,6 @@ class TextClassificationPipeline:
         vocab_size = len(self.vocab)
         output_dim = len(self.train_data.unique("label"))
 
-        self.model = TextClassifierRNNMaxPool(
-            vocab_size,
-            self.embedding_dim,
-            self.hidden_dim,
-            output_dim,
-            self.n_layers
-        ).to(self.device)
-
         # Initialize word embeddings
         word_vectors = api.load('glove-wiki-gigaword-300')
         words_in_vocab = list(self.vocab.token2id.keys())
@@ -244,7 +237,15 @@ class TextClassificationPipeline:
         for i, word in enumerate(words_in_vocab):
             if word in word_vectors:
                 pretrained_embedding[i] = torch.tensor(word_vectors[word])
-        self.model.embedding.weight.data = pretrained_embedding
+        
+        self.model = TextClassifierRNNMaxPool(
+            vocab_size,
+            self.embedding_dim,
+            self.hidden_dim,
+            output_dim,
+            self.n_layers,
+            pretrained_embedding
+        ).to(self.device)
 
         # Set optimizer and loss criterion
         self.optimizer = optim.Adam(self.model.parameters(), lr=self.lr)
@@ -278,6 +279,17 @@ class TextClassificationPipeline:
         plt.xlabel("Epoch")
         plt.ylabel("Loss")
         plt.xticks(range(len(self.metrics["train_losses"])))
+        plt.legend()
+        plt.grid()
+        plt.show()
+
+    def plot_acc(self):
+        plt.figure(figsize=(10, 6))
+        plt.plot(self.metrics["train_accs"], label="Train Acc")
+        plt.plot(self.metrics["valid_accs"], label="Validation Acc")
+        plt.xlabel("Epoch")
+        plt.ylabel("Loss")
+        plt.xticks(range(len(self.metrics["train_accs"])))
         plt.legend()
         plt.grid()
         plt.show()
