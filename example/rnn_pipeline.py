@@ -37,6 +37,36 @@ class TextClassifierRNN(nn.Module):
         sig_out = self.sigmoid(output)
         sig_out = sig_out.squeeze(1)
         return sig_out
+
+class TextClassifierLSTM(nn.Module):
+    def __init__(self, vocab_size, embedding_dim, hidden_dim, output_dim, n_layers, bidirectional, dropout, pretrained_embedding):
+        super(TextClassifier, self).__init__()
+        
+        self.embedding = nn.Embedding.from_pretrained(pretrained_embedding, freeze=False)
+        self.lstm = nn.LSTM(embedding_dim, hidden_dim, num_layers=n_layers, bidirectional=bidirectional, batch_first=True, dropout=dropout)
+        self.fc = nn.Linear(hidden_dim * 2 if bidirectional else hidden_dim, output_dim)
+        self.sigmoid = nn.Sigmoid()
+        
+    def forward(self, x, lengths):
+        embedded = self.embedding(x)
+        
+        # Pack the embedded sequences
+        packed_embedded = rnn_utils.pack_padded_sequence(embedded, lengths, batch_first=True, enforce_sorted=False)
+        
+        packed_output, (hidden, cell) = self.lstm(packed_embedded)
+        output, _ = rnn_utils.pad_packed_sequence(packed_output, batch_first=True)
+        
+        # Use the last hidden state
+        if self.lstm.bidirectional:
+            hidden = torch.cat((hidden[-2,:,:], hidden[-1,:,:]), dim=1)
+        else:
+            hidden = hidden[-1,:,:]
+        
+        output = self.fc(hidden)
+        sig_out = self.sigmoid(output)
+        sig_out = sig_out.squeeze(1)
+        
+        return sig_out
     
 class TextClassifierRNNMaxPool(nn.Module):
     def __init__(self, vocab_size, embedding_dim, hidden_dim, output_dim, n_layers, pretrained_embedding):
