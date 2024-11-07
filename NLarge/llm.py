@@ -26,7 +26,7 @@ class LLMAugmenter():
         device = 0 if torch.cuda.is_available() else -1
         self.summarizer = pipeline("summarization", model="facebook/bart-large-cnn", device=device)
 
-    def paraphrase_with_question(self, sentence):
+    def paraphrase_with_question(self, sentence, max_new_tokens=512):
         if not hasattr(self, 'model'):
             self.init_qn_ans_model()
         
@@ -44,7 +44,7 @@ class LLMAugmenter():
 
         generated_ids = self.model.generate(
             **model_inputs,
-            max_new_tokens=512
+            max_new_tokens=max_new_tokens
         )
         generated_ids = [
             output_ids[len(input_ids):] for input_ids, output_ids in zip(model_inputs.input_ids, generated_ids)

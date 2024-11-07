@@ -10,6 +10,11 @@ from gensim.corpora import Dictionary
 from nltk.tokenize import word_tokenize
 import tqdm
 
+class ModelType:
+    RNN = 'RNN'
+    LSTM = 'LSTM'
+    RNN_MaxPool = 'RNN_MaxPool'
+
 class TextClassifierRNN(nn.Module):
     def __init__(self, vocab_size, embedding_dim, hidden_dim, output_dim, n_layers, pretrained_embedding):
         super(TextClassifierRNN, self).__init__()
@@ -40,7 +45,7 @@ class TextClassifierRNN(nn.Module):
 
 class TextClassifierLSTM(nn.Module):
     def __init__(self, vocab_size, embedding_dim, hidden_dim, output_dim, n_layers, bidirectional, dropout, pretrained_embedding):
-        super(TextClassifier, self).__init__()
+        super(TextClassifierLSTM, self).__init__()
         
         self.embedding = nn.Embedding.from_pretrained(pretrained_embedding, freeze=False)
         self.lstm = nn.LSTM(embedding_dim, hidden_dim, num_layers=n_layers, bidirectional=bidirectional, batch_first=True, dropout=dropout)
@@ -70,10 +75,11 @@ class TextClassifierLSTM(nn.Module):
     
 class TextClassifierRNNMaxPool(nn.Module):
     def __init__(self, vocab_size, embedding_dim, hidden_dim, output_dim, n_layers, pretrained_embedding):
-        super(TextClassifierRNN, self).__init__()
+        super(TextClassifierRNNMaxPool, self).__init__()
         self.embedding = nn.Embedding.from_pretrained(pretrained_embedding, freeze=False)
         self.rnn = nn.RNN(embedding_dim, hidden_dim, n_layers, batch_first=True)
         self.fc = nn.Linear(hidden_dim, output_dim)
+        self.sigmoid = nn.Sigmoid()
 
 
     def forward(self, x, lengths):
@@ -99,7 +105,7 @@ class TextClassifierRNNMaxPool(nn.Module):
     
 class TextClassificationPipeline:
     def __init__(self, augmented_data, test_data, max_length, test_size, batch_size=512, 
-                 embedding_dim=300, hidden_dim=300, n_layers=2, bidirectional=True, dropout_rate=0.5, lr=5e-4):
+                 embedding_dim=300, hidden_dim=300, n_layers=2, bidirectional=True, dropout_rate=0.5, lr=5e-4, model_type=ModelType.RNN_MaxPool):
         
         # Set initial attributes
         self.augmented_data = augmented_data
@@ -113,6 +119,7 @@ class TextClassificationPipeline:
         self.bidirectional = bidirectional
         self.dropout_rate = dropout_rate
         self.lr = lr
+        self.model_type = model_type
         
         # Initialize device
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -268,14 +275,37 @@ class TextClassificationPipeline:
             if word in word_vectors:
                 pretrained_embedding[i] = torch.tensor(word_vectors[word])
         
-        self.model = TextClassifierRNNMaxPool(
+        if(self.model_type == ModelType.RNN_MaxPool):
+            self.model = TextClassifierRNNMaxPool(
             vocab_size,
             self.embedding_dim,
             self.hidden_dim,
             output_dim,
             self.n_layers,
             pretrained_embedding
-        ).to(self.device)
+            ).to(self.device)
+        elif(self.model_type== ModelType.LSTM):
+            self.model = TextClassifierLSTM(
+            vocab_size,
+            self.embedding_dim,
+            self.hidden_dim,
+            output_dim,
+            self.n_layers,
+            self.bidirectional,
+            self.dropout_rate,
+            pretrained_embedding
+            ).to(self.device)
+        elif(self.model_type == ModelType.RNN):
+            self.model = TextClassifierRNN(
+            vocab_size,
+            self.embedding_dim,
+            self.hidden_dim,
+            output_dim,
+            self.n_layers,
+            pretrained_embedding
+            ).to(self.device)
+        else:
+            raise Exception('Invalid ModelType')
 
         # Set optimizer and loss criterion
         self.optimizer = optim.Adam(self.model.parameters(), lr=self.lr)
