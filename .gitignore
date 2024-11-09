@@ -177,3 +177,4 @@ report/*.gz
 report/*.bbl
 report/*.pdf
 **/log.txt
+.DS_Store
