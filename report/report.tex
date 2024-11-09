@@ -155,8 +155,8 @@ Let \( X = \{x_1, x_2, \ldots, x_n\} \) be a sequence of words in a text, where
 The random substitution process can be defined as follows:
 
 For each word \( x_i \) in the sequence \( X \), with a probability \( p \),
-swap \( x_i \) with its adjacent word if \( x_i \) is not a
-stop word. Where \(x_j = x_{i+1}\) or \(x_j = x_{i-1}\).
+swap \( x_i \) with its adjacent word if \( x_i \) is not a stop word. Where
+\(x_j = x_{i+1}\) or \(x_j = x_{i-1}\).
 
 \[
   x_i' =
@@ -477,9 +477,26 @@ Short-Term Memory (LSTM) model to better handle the long sequences. We found
 that the performance of the model improved significantly, and the model was
 able to learn and generalize better.
 
+\section{NLarge: A Python Library for Data Augmentation}
+
+We developed a Python library called NLarge to DA for NLP sentiment analysis.
+The library provides the methods and functions used in this report along with
+models that can be used for sentiment analysis. The goal is to provide a
+toolkit where users can easily experiment with different DA techniques at
+various levels and models for sentiment analysis tasks.
+
+We also made a website to provide end users with some information
+\code{https://nlarge.com} such that we have an end to end solution for users to
+use.
+
+
 \section{Discussion}
 
-We find it interesting that the use of statistical methods such as synonym
+We find it interesting that the use of statistical methods still has a place in
+the field of DA in post LLM era. The use of LLMs for DA has shown promising
+results in improving the performance of NLP models. While the use of LLMs for
+DA produces schematically diverse samples with better quality, the computation
+cost is high especially if the augmentation level is high.
 
 \section{Conclusion}
 % Summarize your findings and future work
