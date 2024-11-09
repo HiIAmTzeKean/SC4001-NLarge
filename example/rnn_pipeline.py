@@ -332,8 +332,9 @@ class TextClassificationPipeline:
             print(f"Train Loss: {train_loss:.3f}, Train Acc: {train_acc:.3f}")
             print(f"Valid Loss: {valid_loss:.3f}, Valid Acc: {valid_acc:.3f}")
 
-    def plot_loss(self):
+    def plot_loss(self, title=''):
         plt.figure(figsize=(10, 6))
+        plt.title(title)
         plt.plot(self.metrics["train_losses"], label="Train Loss")
         plt.plot(self.metrics["valid_losses"], label="Validation Loss")
         plt.xlabel("Epoch")
@@ -343,12 +344,13 @@ class TextClassificationPipeline:
         plt.grid()
         plt.show()
 
-    def plot_acc(self):
+    def plot_acc(self, title=''):
         plt.figure(figsize=(10, 6))
+        plt.title(title)
         plt.plot(self.metrics["train_accs"], label="Train Acc")
         plt.plot(self.metrics["valid_accs"], label="Validation Acc")
         plt.xlabel("Epoch")
-        plt.ylabel("Loss")
+        plt.ylabel("Accuracy")
         plt.xticks(range(len(self.metrics["train_accs"])))
         plt.legend()
         plt.grid()

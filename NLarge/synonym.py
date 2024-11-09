@@ -122,7 +122,7 @@ class SynonymAugmenter():
 
         model = WordNet(lang=lang) if aug_src == "wordnet" else None
         if model is None:
-            raise ValueError("aug_src must be either `wordnet` or `ppdb`.")
+            raise ValueError("currently, aug_src can only be `wordnet`.")
 
         change_seq = 0
         tokenizer = tokenizer or str.split
