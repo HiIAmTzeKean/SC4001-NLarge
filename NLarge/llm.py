@@ -7,6 +7,20 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 loggers = logging.getLogger(__name__)
 
 class LLMAugmenter():
+    """
+    A class to perform data augmentation using Large Language Models (LLMs).
+
+    Methods:
+    --------
+    init_qn_ans_model():
+        Initializes the question-answering model.
+    init_summarizer_model():
+        Initializes the summarizer model.
+    paraphrase_with_question(sentence, max_new_tokens=512):
+        Generates a paraphrase of the given sentence using the question-answering model.
+    summarize_with_summarizer(text, max_length=100, min_length=30):
+        Summarizes the given text using the summarizer model.
+    """
     def __init__(self):
         self.model_name: str
         self.model:AutoModelForCausalLM
@@ -14,6 +28,9 @@ class LLMAugmenter():
         loggers.info("LLMAugmenter initialized")
          
     def init_qn_ans_model(self):
+        """
+        Initializes the question-answering model.
+        """
         self.model_name = "Qwen/Qwen2.5-1.5B-Instruct"
         self.model = AutoModelForCausalLM.from_pretrained(
             self.model_name,
@@ -23,10 +40,23 @@ class LLMAugmenter():
         self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
     
     def init_summarizer_model(self):
+        """
+        Initializes the summarizer model.
+        """
         device = 0 if torch.cuda.is_available() else -1
         self.summarizer = pipeline("summarization", model="facebook/bart-large-cnn", device=device)
 
-    def paraphrase_with_question(self, sentence, max_new_tokens=512):
+    def paraphrase_with_question(self, sentence: str, max_new_tokens=512):
+        """
+        Generates a paraphrase of the given sentence using the question-answering model.
+
+        :param sentence: The sentence to be paraphrased.
+        :type sentence: str
+        :param max_new_tokens: The maximum number of new tokens to generate (default is 512).
+        :type max_new_tokens: int
+        :return: The paraphrased sentence.
+        :rtype: str
+        """
         if not hasattr(self, 'model'):
             self.init_qn_ans_model()
         
@@ -53,7 +83,19 @@ class LLMAugmenter():
         response = self.tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0]
         return response
 
-    def summarize_with_summarizer(self, text, max_length = 100, min_length = 30):
+    def summarize_with_summarizer(self, text: str, max_length = 100, min_length = 30):
+        """
+        Summarizes the given text using the summarizer model.
+
+        :param text: The text to be summarized.
+        :type text: str
+        :param max_length: The maximum length of the summary (default is 100).
+        :type max_length: int
+        :param min_length: The minimum length of the summary (default is 30).
+        :type min_length: int
+        :return: The summarized text.
+        :rtype: str
+        """
         if not hasattr(self, 'summarizer'):
             self.init_summarizer_model()
         text = self.summarizer(text, max_length=max_length, min_length=min_length, do_sample=False)
