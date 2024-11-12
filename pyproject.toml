@@ -1,9 +1,9 @@
 [tool.poetry]
 name = "NLarge"
-version = "0.2.0"
+version = "0.2.2"
 description = "Data augmentation for NLP"
 authors = ["Ng Tze Kean <ngtzekean@gmail.com>",
-           "Dexter Gui"]
+           "Dexter Gui <dextergui.zy@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
