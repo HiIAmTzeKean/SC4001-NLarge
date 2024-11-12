@@ -727,9 +727,9 @@ different methods that are available.
 
 \subsection{Discussion}
 
-The experiments conducted in this study demonstrate the impact of
-data augmentation (DA) techniques on the performance of NLP models for
-sentiment analysis. Traditional methods such as random substitution and synonym
+The experiments conducted in this study demonstrate the impact of data
+augmentation (DA) techniques on the performance of NLP models for sentiment
+analysis. Traditional methods such as random substitution and synonym
 replacement provided a baseline improvement in model performance by introducing
 variability into the training data. However, these methods often fell short in
 capturing the nuanced semantics and contextual dependencies inherent in natural
@@ -755,6 +755,30 @@ models with a static vocabulary to learn more effectively from the augmented
 data. Additionally, summarizers were found to be more capable of capturing the
 essence of the text and generating relevant samples compared to paraphrasing
 techniques.
+
+Interestingly, the performance of the RNN model was generally better than that
+of the LSTM model on the Rotten Tomatoes dataset. This can be attributed to
+several factors. Firstly, the Rotten Tomatoes dataset consists of relatively
+short text sequences, where the advantages of LSTM's ability to capture
+long-term dependencies are less pronounced. RNNs, being simpler and less
+computationally intensive, can perform well on such short sequences without the
+overhead of managing long-term dependencies.
+
+Secondly, LSTMs are designed to mitigate the vanishing gradient problem in long
+sequences, but this advantage may not be fully utilized in datasets with
+shorter text lengths. The additional complexity of LSTMs, including the gating
+mechanisms, might introduce unnecessary overhead for short text sequences,
+leading to slightly lower performance compared to RNNs.
+
+We do note that the performance of the LSTM model was not superior to the RNN
+when the token length of the LLM models were greater than 20 tokens because we
+did not use a dynamically updating vocabulary size which could explain why in
+this project, there was no clear advantage of the LSTM model.
+
+We would also like to note that the task chosen at hand is specifically for
+sentiment classification and that the findings in this report may not translate
+to other tasks specific domains. However, we do believe that overall the use of
+DA can potentially help in the case of over-fitting NLP tasks.
 
 \subsection{Conclusion}
 
