@@ -28,6 +28,12 @@ poetry install
 
 To run the models and experiments, you can use the python notebooks in the `example/` directory. The notebooks contain detailed explanations and code snippets for data augmentation and model training.
 
+## Website
+
+You can access the PiPy page of the project from the link here: [pypi page](https://pypi.org/project/NLarge/)
+
+Our github repository can be found here: [github page](https://github.com/HiIAmTzeKean/SC4001)
+
 ## Contributing
 
 Contributions to this project are welcome. If you have any suggestions or improvements, please create a pull request or open an issue.
