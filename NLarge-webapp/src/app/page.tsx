@@ -22,6 +22,8 @@ import { IconListSearch } from "@tabler/icons-react";
 import clsx from "clsx";
 import classes from "@/components/TableOfContents.module.css";
 import React, { useEffect } from "react";
+import { useRouter } from "next/router";
+import Link from "next/link";
 
 const tableOfContents = [
   {
@@ -95,13 +97,10 @@ export default function Home() {
   ));
 
   return (
-    <AppShell header={{ height: 60 }} padding="md">
-      <AppShellHeader>
-        <NavBar />
-      </AppShellHeader>
-      <AppShellMain className="px-24 ">
+    <>
+      <AppShellMain className="px-24 min-h-[85vh] max-h-[95vh] flex flex-col justify-between">
         <div className="flex justify-between">
-          <Box className="max-w-4xl min-w-3xl">
+          <Box className="max-w-4xl min-w-3xl pt-md">
             <Title className="text-left mt-16">
               <Text
                 inherit
@@ -130,22 +129,25 @@ export default function Home() {
             </Text>
 
             <div className="mt-10 gap-5">
-              <Button
-                variant="gradient"
-                size="xl"
-                gradient={{ from: "tertiary1", to: "tertiary2", deg: 152 }}
-              >
-                Try NLarge
-              </Button>
+              <Link href="/documentation">
+                <Button
+                  className="transform transition-transform duration-300 hover:scale-110"
+                  variant="gradient"
+                  size="xl"
+                  gradient={{ from: "tertiary1", to: "tertiary2", deg: 152 }}
+                >
+                  Read our Documentation
+                </Button>
+              </Link>
             </div>
           </Box>
           <Box className="pt-36">
-            <Skeleton height={480} width={450} radius={5} />
+            <Skeleton height={400} width={350} radius={5} mt="sm" />
           </Box>
         </div>
-        <Stack pt="sm" align="center" justify="center" gap="xs" c="primary">
+        <Stack pb="sm" align="center" justify="center" gap="xs" c="primary">
           <Text ff="monospace" c="primary">
-            Read more
+            Read more about NLarge
           </Text>
           <ArrowDownIcon />
         </Stack>
@@ -182,10 +184,11 @@ export default function Home() {
             © 2024 NLarge. All rights reserved
           </Text>
           <Text ff="monospace" c="dimmed" size="sm">
-            Created as part of SC4001 Neural Network & Deep Learning
+            Created as part of Nanyang Technological University: SC4001 Neural
+            Network & Deep Learning
           </Text>
         </Group>
       </AppShellSection>
-    </AppShell>
+    </>
   );
 }

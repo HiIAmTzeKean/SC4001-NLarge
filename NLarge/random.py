@@ -54,7 +54,7 @@ class RandomAugmenter():
             words = self.crop(words)
         
         augmented_words = ' '.join(words)
-        return original_sentence, augmented_words
+        return augmented_words
     
     # https://arxiv.org/pdf/1703.02573.pdf, https://arxiv.org/pdf/1712.06751.pdf, https://arxiv.org/pdf/1806.09030.pdf
     # https://arxiv.org/pdf/1905.11268.pdf,
