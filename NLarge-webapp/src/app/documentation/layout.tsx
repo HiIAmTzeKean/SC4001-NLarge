@@ -61,12 +61,6 @@ export default function DocumentationLayout({
               variant="default"
               active={isActiveLink("/documentation/helper")}
             />
-            <NavLink
-              label="Utility functions"
-              href="/documentation/utils"
-              variant="default"
-              active={isActiveLink("/documentation/utils")}
-            />
           </NavLink>
           <NavLink
             key="examples"
@@ -95,12 +89,6 @@ export default function DocumentationLayout({
               href="/documentation/examples/llm"
               variant="default"
               active={isActiveLink("/documentation/examples/llm")}
-            />
-            <NavLink
-              label="Hybrid Augmentations"
-              href="/documentation/examples/hybrid"
-              variant="default"
-              active={isActiveLink("/documentation/examples/hybrid")}
             />
           </NavLink>
         </Box>
