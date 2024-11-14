@@ -178,41 +178,71 @@ dataset through various means to increase the volume of the corpus in
 meaningful manners that will help the model learn and overfit less to the
 training data.
 
-\section{DA using Random Swap}
+\section{DA using Random Methods}
 
-In this subsection, we analyze the performance of DA using random swap.
+\subsection{Random Swap}
 
-Let \( X = \{x_1, x_2, \ldots, x_n\} \) be a sequence of words in a text, where
-\( x_i \) represents the \( i \)-th word in the sequence.
+Let \( X = \{x_1, x_2, \ldots, x_n\} \) be a sequence of words in a text, where \( x_i \) represents the \( i \)-th word in the sequence.
 
 The random swap process can be defined as follows:
 
-For each word \( x_i \) in the sequence \( X \), with a probability \( p \),
-swap \( x_i \) with its adjacent word if \( x_i \) is not a stop word. Where
-\(x_j = x_{i+1}\) or \(x_j = x_{i-1}\).
+For each word \( x_i \) in the sequence \( X \), with a probability \( p \), swap \( x_i \) with its adjacent word if \( x_i \) is not a stop word. Where \( x_j = x_{i+1} \) or \( x_j = x_{i-1} \).
 
 \[
   x_i' =
   \begin{cases}
-    \mathrm{swap}(x_i,x_j) & \mathrm{with\ probability\ } p   \\
-    x_i                    & \mathrm{with probability } 1 - p
+    \mathrm{swap}(x_i, x_j) & \mathrm{with\ probability\ } p \\
+    x_i & \mathrm{with\ probability\ } 1 - p
   \end{cases}
 \]
 
-where \( x_i' \) is the new word after swap. The augmented sequence \(
-X' = \{x_1', x_2', \ldots, x_n'\} \) is then used as the new training sample.
+where \( x_i' \) is the new word after swap. The augmented sequence \( X' = \{x_1', x_2', \ldots, x_n'\} \) is then used as the new training sample.
 
-The random swap process involves iterating over each word in the
-sequence and swapping with a predefined probability \( p \). This introduces
-variability into the dataset, potentially improving the robustness and
-generalization capabilities of NLP models.
+The random swap process involves iterating over each word in the sequence and swapping with a predefined probability \( p \). This introduces variability into the dataset, potentially improving the robustness and generalization capabilities of NLP models.
 
-To evaluate the effectiveness of random swap, we conducted experiments
+\subsection{Random Substitution}
+
+The random substitution process can be defined as follows:
+
+For each word \( x_i \) in the sequence \( X \), with a probability \( p \), replace \( x_i \) with a randomly chosen word from the vocabulary \( V \).
+
+\[
+  x_i' =
+  \begin{cases}
+    \mathrm{random}(V) & \mathrm{with\ probability\ } p \\
+    x_i & \mathrm{with\ probability\ } 1 - p
+  \end{cases}
+\]
+
+where \( x_i' \) is the new word after substitution, and \( \mathrm{random}(V) \) denotes a randomly selected word from the vocabulary \( V \). The augmented sequence \( X' = \{x_1', x_2', \ldots, x_n'\} \) is then used as the new training sample.
+
+The random substitution process introduces variability into the dataset by replacing words with random words from the vocabulary, potentially improving the robustness and generalization capabilities of NLP models.
+
+\subsection{Random Deletion}
+
+The random deletion process can be defined as follows:
+
+For each word \( x_i \) in the sequence \( X \), with a probability \( p \), delete \( x_i \) from the sequence.
+
+\[
+  x_i' =
+  \begin{cases}
+    \emptyset & \mathrm{with\ probability\ } p \\
+    x_i & \mathrm{with\ probability\ } 1 - p
+  \end{cases}
+\]
+
+where \( x_i' \) is the new word after deletion, and \( \emptyset \) denotes the deletion of the word. The augmented sequence \( X' = \{x_1', x_2', \ldots, x_n'\} \) is then used as the new training sample.
+
+The random deletion process introduces variability into the dataset by randomly removing words, potentially improving the robustness and generalization capabilities of NLP models.
+
+
+\subsection{Results and Analysis}
+
+To evaluate the effectiveness of random methods, we conducted experiments
 with different levels of augmentation: 5\%, 10\%, and 20\% of the dataset. The
 performance of the models trained with these augmented datasets was assessed
 using accuracy score.
-
-\subsection{Results and Analysis}
 
 The results of our experiments indicate that the performance of the RNN model
 keeps increasing with higher levels of augmentation. This suggests that data
@@ -221,7 +251,9 @@ Specifically, the model trained with 20\% augmented data achieved the highest
 accuracy, followed by the models trained with 10\% and 5\% augmented data.
 These findings highlight the importance of data augmentation in enhancing the
 diversity and robustness of training datasets, leading to improved model
-performance.
+performance. We will report the results using random swap augmentation as we saw
+no significant difference in the performance of the model using the different
+random augmentation methods.
 
 \begin{figure}[ht]
   \centering
