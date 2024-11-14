@@ -20,13 +20,22 @@ poetry install
 
 ## Repository Contents
 
-- `report.tex`: The LaTeX document containing the detailed report of the project, including methodology, experiments, results, and analysis.
-- `example/`: Contains example scripts for data augmentation and model training.
-- `NLarge/`: The main package containing the data augmentation and model implementation.
+- [`report.tex`](report/report.tex): The LaTeX document containing the detailed report of the project, including methodology, experiments, results, and analysis.
+- [`example/`](example): Contains example scripts for data augmentation and model training.
+  - [`demo.ipynb`](example/demo.ipynb)
+  - [`Result of test`](example/test/)
+- [`NLarge/`](NLarge): The main package containing the data augmentation and model implementation.
+  - [`dataset_concat.py`](NLarge/dataset_concat.py)
+  - [`llm.py`](NLarge/llm.py)
+  - [`pipeline.py`](NLarge/pipeline.py)
+  - [`random.py`](NLarge/random.py)
+  - [`synonym.py`](NLarge/synonym.py)
+  - [`utils/`](NLarge/utils)
+
 
 ## Usage
 
-To run the models and experiments, you can use the python notebooks in the `example/` directory. The notebooks contain detailed explanations and code snippets for data augmentation and model training.
+To run the models and experiments, you can use the python notebooks in the `example/` directory. The notebooks contain detailed explanations and code snippets for data augmentation and model training. For the results of the experiments, you can refer to the `example/test/` directory.
 
 ## Website
 
