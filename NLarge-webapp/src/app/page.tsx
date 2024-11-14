@@ -1,10 +1,7 @@
 "use client";
 
 import { Documentation } from "@/components/documentation";
-import { NavBar } from "@/components/navbar";
 import {
-  AppShell,
-  AppShellHeader,
   AppShellMain,
   AppShellSection,
   Box,
@@ -12,16 +9,18 @@ import {
   Divider,
   Group,
   rem,
-  Skeleton,
   Stack,
   Text,
   Title,
+  useMantineColorScheme,
 } from "@mantine/core";
 import { ArrowDownIcon } from "@radix-ui/react-icons";
 import { IconListSearch } from "@tabler/icons-react";
 import clsx from "clsx";
 import classes from "@/components/TableOfContents.module.css";
 import React, { useEffect } from "react";
+import Link from "next/link";
+import { Logo } from "@/components/logo";
 
 const tableOfContents = [
   {
@@ -30,21 +29,30 @@ const tableOfContents = [
     order: 1,
   },
   { label: "Why does it matter?", link: "#why-does-it-matter", order: 1 },
+  { label: "Introducing NLarge", link: "#intro-NLarge", order: 1 },
   { label: "Types of data augmentation", link: "#types-of-data-aug", order: 1 },
-  { label: "Augmentation 1", link: "#aug-1", order: 2 },
-  { label: "Augmentation 2", link: "#aug-2", order: 2 },
-  { label: "Augmentation 3", link: "#aug-3", order: 2 },
+  { label: "Random Augmentation", link: "#aug-1", order: 2 },
+  { label: "Synonym Augmentation", link: "#aug-2", order: 2 },
+  { label: "LLM Augmentation", link: "#aug-3", order: 2 },
+  { label: "Results and Findings", link: "#results", order: 1 },
 ];
 
 export default function Home() {
-  const [active, setActive] = React.useState(2);
+  const { colorScheme } = useMantineColorScheme({
+    keepTransitions: true,
+  });
+  const isDark = colorScheme === "dark";
+  const [active, setActive] = React.useState(0);
   const sectionsRefs = React.useRef<HTMLDivElement[]>([]);
 
   const handleClick = (index: number, link: string) => {
     setActive(index);
     const targetElement = document.querySelector(link);
     if (targetElement) {
-      targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
+      window.scrollTo({
+        top: targetElement.getBoundingClientRect().top + window.scrollY - 300, // Adjust scroll position with -80px offset for the header
+        behavior: "smooth",
+      });
     }
   };
 
@@ -95,13 +103,10 @@ export default function Home() {
   ));
 
   return (
-    <AppShell header={{ height: 60 }} padding="md">
-      <AppShellHeader>
-        <NavBar />
-      </AppShellHeader>
-      <AppShellMain className="px-24 ">
+    <>
+      <AppShellMain className="px-24 min-h-[90vh] max-h-[95vh] flex flex-col justify-between">
         <div className="flex justify-between">
-          <Box className="max-w-4xl min-w-3xl">
+          <Box className="max-w-4xl min-w-3xl pt-md">
             <Title className="text-left mt-16">
               <Text
                 inherit
@@ -130,22 +135,30 @@ export default function Home() {
             </Text>
 
             <div className="mt-10 gap-5">
-              <Button
-                variant="gradient"
-                size="xl"
-                gradient={{ from: "tertiary1", to: "tertiary2", deg: 152 }}
-              >
-                Try NLarge
-              </Button>
+              <Link href="/documentation">
+                <Button
+                  className="transform transition-transform duration-300 hover:scale-110"
+                  variant="gradient"
+                  size="xl"
+                  gradient={{ from: "tertiary1", to: "tertiary2", deg: 152 }}
+                >
+                  Read our Documentation
+                </Button>
+              </Link>
             </div>
           </Box>
-          <Box className="pt-36">
-            <Skeleton height={480} width={450} radius={5} />
+          <Box className="pt-44 pr-14">
+            <Logo
+              width="550"
+              height="550"
+              stroke="4"
+              color={isDark ? "#D0BCFF" : "#7363AD"}
+            />
           </Box>
         </div>
-        <Stack pt="sm" align="center" justify="center" gap="xs" c="primary">
+        <Stack pb="sm" align="center" justify="center" gap="xs" c="primary">
           <Text ff="monospace" c="primary">
-            Read more
+            Read more about NLarge
           </Text>
           <ArrowDownIcon />
         </Stack>
@@ -182,10 +195,11 @@ export default function Home() {
             © 2024 NLarge. All rights reserved
           </Text>
           <Text ff="monospace" c="dimmed" size="sm">
-            Created as part of SC4001 Neural Network & Deep Learning
+            Created as part of Nanyang Technological University: SC4001 Neural
+            Network & Deep Learning
           </Text>
         </Group>
       </AppShellSection>
-    </AppShell>
+    </>
   );
 }
