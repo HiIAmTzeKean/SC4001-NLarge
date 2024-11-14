@@ -25,4 +25,5 @@ jobs:
           PYTHON_VERSION: "3.12"
           ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PUBLISH_REGISTRY_USERNAME: "__token__"
+          BRANCH: "master"
           PUBLISH_REGISTRY_PASSWORD: ${{ secrets.PUBLISH_REGISTRY_PASSWORD }}
