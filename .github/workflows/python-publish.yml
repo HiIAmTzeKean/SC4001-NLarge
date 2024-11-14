@@ -24,4 +24,5 @@ jobs:
           PACKAGE_DIRECTORY: "./NLarge/"
           PYTHON_VERSION: "3.12"
           ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PUBLISH_REGISTRY_USERNAME: "__token__"
           PUBLISH_REGISTRY_PASSWORD: ${{ secrets.PUBLISH_REGISTRY_PASSWORD }}
