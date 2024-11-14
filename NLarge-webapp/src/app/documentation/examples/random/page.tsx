@@ -201,30 +201,30 @@ export default function ExampleRandom() {
               Arguments:
             </Text>
             <Group>
-              <Code>data</Code>
+              <Code bg="dimmed">data</Code>
               <Text>Input text to augment</Text>
             </Group>
             <Group>
-              <Code>action</Code>
+              <Code bg="dimmed">action</Code>
               <Text>
                 Action to perform, in the case of using Random Swap,
                 action=Action.SWAP
               </Text>
             </Group>
             <Group>
-              <Code>aug_percent</Code>
+              <Code bg="dimmed">aug_percent</Code>
               <Text>Percentage of words in sequence to augment</Text>
             </Group>
             <Group>
-              <Code>aug_min</Code>
+              <Code bg="dimmed">aug_min</Code>
               <Text>Minimum number of words to augment</Text>
             </Group>
             <Group>
-              <Code>aug_max</Code>
+              <Code bg="dimmed">aug_max</Code>
               <Text>Maximum number of words to augment</Text>
             </Group>
             <Group>
-              <Code>skipwords</Code>
+              <Code bg="dimmed">skipwords</Code>
               <Text>List of words to skip augmentation</Text>
             </Group>
             <CodeHighlightTabs
@@ -267,34 +267,34 @@ export default function ExampleRandom() {
               Arguments:
             </Text>
             <Group>
-              <Code>data</Code>
+              <Code bg="dimmed">data</Code>
               <Text>Input text to augment</Text>
             </Group>
             <Group>
-              <Code>action</Code>
+              <Code bg="dimmed">action</Code>
               <Text>
                 Action to perform, in the case of using Random Substitute,
                 action=Action.SUBSTITUTE
               </Text>
             </Group>
             <Group>
-              <Code>aug_percent</Code>
+              <Code bg="dimmed">aug_percent</Code>
               <Text>Percentage of words in sequence to augment</Text>
             </Group>
             <Group>
-              <Code>aug_min</Code>
+              <Code bg="dimmed">aug_min</Code>
               <Text>Minimum number of words to augment</Text>
             </Group>
             <Group>
-              <Code>aug_max</Code>
+              <Code bg="dimmed">aug_max</Code>
               <Text>Maximum number of words to augment</Text>
             </Group>
             <Group>
-              <Code>skipwords</Code>
+              <Code bg="dimmed">skipwords</Code>
               <Text>List of words to skip augmentation</Text>
             </Group>
             <Group>
-              <Code>target_words</Code>
+              <Code bg="dimmed">target_words</Code>
               <Text>
                 List of words to substitue with the original sampled word
               </Text>
@@ -337,30 +337,30 @@ export default function ExampleRandom() {
               Arguments:
             </Text>
             <Group>
-              <Code>data</Code>
+              <Code bg="dimmed">data</Code>
               <Text>Input text to augment</Text>
             </Group>
             <Group>
-              <Code>action</Code>
+              <Code bg="dimmed">action</Code>
               <Text>
                 Action to perform, in the case of using Random Delete,
                 action=Action.DELETE
               </Text>
             </Group>
             <Group>
-              <Code>aug_percent</Code>
+              <Code bg="dimmed">aug_percent</Code>
               <Text>Percentage of words in sequence to augment</Text>
             </Group>
             <Group>
-              <Code>aug_min</Code>
+              <Code bg="dimmed">aug_min</Code>
               <Text>Minimum number of words to augment</Text>
             </Group>
             <Group>
-              <Code>aug_max</Code>
+              <Code bg="dimmed">aug_max</Code>
               <Text>Maximum number of words to augment</Text>
             </Group>
             <Group>
-              <Code>skipwords</Code>
+              <Code bg="dimmed">skipwords</Code>
               <Text>List of words to skip augmentation</Text>
             </Group>
             <CodeHighlightTabs
@@ -403,30 +403,30 @@ export default function ExampleRandom() {
               Arguments:
             </Text>
             <Group>
-              <Code>data</Code>
+              <Code bg="dimmed">data</Code>
               <Text>Input text to augment</Text>
             </Group>
             <Group>
-              <Code>action</Code>
+              <Code bg="dimmed">action</Code>
               <Text>
                 Action to perform, in the case of using Random Delete,
                 action=Action.DELETE
               </Text>
             </Group>
             <Group>
-              <Code>aug_percent</Code>
+              <Code bg="dimmed">aug_percent</Code>
               <Text>Percentage of words in sequence to augment</Text>
             </Group>
             <Group>
-              <Code>aug_min</Code>
+              <Code bg="dimmed">aug_min</Code>
               <Text>Minimum number of words to augment</Text>
             </Group>
             <Group>
-              <Code>aug_max</Code>
+              <Code bg="dimmed">aug_max</Code>
               <Text>Maximum number of words to augment</Text>
             </Group>
             <Group>
-              <Code>skipwords</Code>
+              <Code bg="dimmed">skipwords</Code>
               <Text>List of words to skip augmentation</Text>
             </Group>
             <CodeHighlightTabs
