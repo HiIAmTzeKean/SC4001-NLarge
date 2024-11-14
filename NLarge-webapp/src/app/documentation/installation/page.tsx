@@ -1,10 +1,9 @@
-import { CodeHighlight, CodeHighlightTabs } from "@mantine/code-highlight";
+import { CodeHighlightTabs } from "@mantine/code-highlight";
 import {
   AppShellSection,
   Divider,
   Group,
   rem,
-  Skeleton,
   Stack,
   Text,
   Title,

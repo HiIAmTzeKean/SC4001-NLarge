@@ -2,7 +2,6 @@
 
 import {
   useMantineColorScheme,
-  Button,
   Group,
   Switch,
   useMantineTheme,
@@ -11,10 +10,9 @@ import {
 import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
 
 export function ColorSchemesSwitcher() {
-  const { colorScheme, toggleColorScheme, setColorScheme, clearColorScheme } =
-    useMantineColorScheme({
-      keepTransitions: true,
-    });
+  const { colorScheme, toggleColorScheme } = useMantineColorScheme({
+    keepTransitions: true,
+  });
   const theme = useMantineTheme();
   const isDark = colorScheme === "dark";
 

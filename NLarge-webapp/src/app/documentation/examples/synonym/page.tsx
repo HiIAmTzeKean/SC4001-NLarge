@@ -165,8 +165,8 @@ export default function ExampleSynonym() {
             </Text>
             <Text c="dimmed" size="md">
               Our POS functionality maps between POS tags and constituent tags
-              to ensure compatibility with <Code bg="dimmed">WordNet</Code>'s
-              POS requirements. <br /> <br />{" "}
+              to ensure compatibility with <Code bg="dimmed">WordNet</Code>
+              &apos;s POS requirements. <br /> <br />{" "}
               <i>
                 The current version supports noun, verb, adjective and adverb
                 classifications.
@@ -224,21 +224,22 @@ syn_aug = SynonymAugmenter()
               <Code bg="dimmed">data</Code>
               <Text>
                 (str) - Input text to augment
-                <br /> <i>example: 'This is a test sentence.'</i>
+                <br /> <i>example: &apos;This is a test sentence.&apos;</i>
               </Text>
             </Group>
             <Group>
               <Code bg="dimmed">aug_src</Code>
               <Text>
-                (str) - Augmentation source, currently supports only "wordnet".{" "}
-                <br />
-                <i>default: 'wordnet'</i>
+                (str) - Augmentation source, currently supports only
+                &quot;wordnet&quot;. <br />
+                <i>default: &apos;wordnet&apos;</i>
               </Text>
             </Group>
             <Group>
               <Code bg="dimmed">lang</Code>
               <Text>
-                (str) - Language of the input text. <br /> <i>default: 'eng'</i>
+                (str) - Language of the input text. <br />{" "}
+                <i>default: &apos;eng&apos;</i>
               </Text>
             </Group>
             <Group>
@@ -324,8 +325,9 @@ The quick brown fox jumps over the lazy dog.
               Argumentation on a dataset. This example will also function as a
               proof of concept for the NLarge Synonym Augmentation. This example
               will be evaluating augmented datasets on LSTM based on the loss
-              and accuracy metrics. We have chosen the 'rotten tomatoes' dataset
-              due to it's small size that is prone to overfitting.
+              and accuracy metrics. We have chosen the &apos;rotten
+              tomatoes&apos; dataset due to it&apos;s small size that is prone
+              to overfitting.
             </Text>
             <Text c="primary" size="lg" fw="bolder">
               Full Code:
@@ -429,7 +431,7 @@ pipeline_augmented_10.plot_acc(title="10% Synonym Augment on LSTM")
               className="w-full rounded-sm outline-1 outline outline-slate-600"
             />
             <Text c="primary" size="md">
-              Models' Loss
+              Models&apos; Loss
             </Text>
             <div
               id="modelLoss"
@@ -443,7 +445,7 @@ pipeline_augmented_10.plot_acc(title="10% Synonym Augment on LSTM")
             </Group>
 
             <Text c="primary" size="md">
-              Models' Accuracy
+              Models&apos; Accuracy
             </Text>
             <div
               id="modelAcc"

@@ -1,11 +1,9 @@
 "use client";
 
-import { AppShell, Box, Group, NavLink, rem, Skeleton } from "@mantine/core";
+import { AppShell, Box, NavLink, rem } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconBook2, IconCode } from "@tabler/icons-react";
 import "@mantine/code-highlight/styles.css";
-import { Children } from "react";
-import { useRouter } from "next/router";
 import { usePathname } from "next/navigation";
 
 export default function DocumentationLayout({
@@ -13,10 +11,10 @@ export default function DocumentationLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [opened, { toggle }] = useDisclosure();
+  const [opened] = useDisclosure();
   const pathname = usePathname();
   const isActiveLink = (href: string) => {
-    let match = pathname.match(href);
+    const match = pathname.match(href);
     if (match) return true;
     else return false;
   };

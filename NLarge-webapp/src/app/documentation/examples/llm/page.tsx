@@ -186,22 +186,22 @@ export default function ExampleLLM() {
               reword sentences without repeating the same verbs or phrases,
               generating a unique paraphrase that maintains the original meaning
               but provides distinct wording. By framing the task as a
-              question-answer prompt, the model's responses are directed towards
-              producing a rephrased answer, adding both lexical and structural
-              diversity.
+              question-answer prompt, the model&apos;s responses are directed
+              towards producing a rephrased answer, adding both lexical and
+              structural diversity.
               <br /> <br /> By generating multiple paraphrased versions of the
               same text, <Code bg="dimmed">LLMAugmenter</Code> introduces subtle
               variations that help the model learn more generalized features of
               the language. This variation reduces the chances of overfitting,
-              as the model isn’t exposed to identical sentences repeatedly.{" "}
+              as the model isn&apos;t exposed to identical sentences repeatedly.{" "}
               <br /> <br />
               Paraphrased sentences, with different structures and vocabulary,
               prepare the model to handle a broader range of linguistic
               patterns, improving its robustness in real-world applications.{" "}
               <br /> <br /> As the LLM avoids verb repetition while rephrasing,
-              it deepens the model's understanding of summarizes and related
-              terms, which is especially beneficial for tasks like sentiment
-              analysis, where nuanced language is common.
+              it deepens the model&apos;s understanding of summarizes and
+              related terms, which is especially beneficial for tasks like
+              sentiment analysis, where nuanced language is common.
             </Text>
             <Text c="primary" size="md" fw="bolder">
               Parameters
@@ -216,7 +216,7 @@ export default function ExampleLLM() {
               <Code bg="dimmed">sentence</Code>
               <Text>
                 (str) - Input text to augment
-                <br /> <i>example: 'This is a test sentence.'</i>
+                <br /> <i>example: &apos;This is a test sentence.&apos;</i>
               </Text>
             </Group>
             <Group>
@@ -306,7 +306,7 @@ This film is highly recommended for every member of the household.
               <Code bg="dimmed">text</Code>
               <Text>
                 (str) - Input text to augment.
-                <br /> <i>example: 'This is a test sentence.'</i>
+                <br /> <i>example: &apos;This is a test sentence.&apos;</i>
               </Text>
             </Group>
             <Group>
@@ -384,8 +384,8 @@ print(res)
               function as a proof of concept for the NLarge LLM Summarizer
               Augmentation. This example will be evaluating augmented datasets
               on LSTM based on the loss and accuracy metrics. We have chosen the
-              'rotten tomatoes' dataset due to it's small size that is prone to
-              overfitting.
+              &apos;rotten tomatoes&apos; dataset due to it&apos;s small size
+              that is prone to overfitting.
             </Text>
             <Text c="primary" size="lg" fw="bolder">
               Full Code:
@@ -489,7 +489,7 @@ pipeline_augmented_200.plot_acc(title="LSTM - LLM Summarizer Augment (200%)")
               className="w-full rounded-sm outline-1 outline outline-slate-600"
             />
             <Text c="primary" size="md">
-              Models' Loss
+              Models&apos; Loss
             </Text>
             <div
               id="modelLoss"
@@ -503,7 +503,7 @@ pipeline_augmented_200.plot_acc(title="LSTM - LLM Summarizer Augment (200%)")
             </Group>
 
             <Text c="primary" size="md">
-              Models' Accuracy
+              Models&apos; Accuracy
             </Text>
             <div
               id="modelAcc"

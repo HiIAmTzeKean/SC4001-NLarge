@@ -162,8 +162,8 @@ export default function DocumentationHelper() {
                 </Text>
                 <Text c="dimmed">
                   The original dataset to augment, structured with at least two
-                  fields: "text" for the input text and "label" for associated
-                  labels.
+                  fields: &quot;text&quot; for the input text and
+                  &quot;label&quot; for associated labels.
                 </Text>
               </Group>
               <Group>
@@ -184,8 +184,8 @@ export default function DocumentationHelper() {
               </Text>
               <Text c="dimmed" size="md">
                 The function returns a list of augmented dataset samples. Each
-                sample is a dictionary with "text" (augmented text) and "label"
-                (original label) fields.
+                sample is a dictionary with &quot;text&quot; (augmented text)
+                and &quot;label&quot; (original label) fields.
               </Text>
 
               <Text c="primary" size="md" fw="bolder">

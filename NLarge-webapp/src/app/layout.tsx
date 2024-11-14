@@ -1,5 +1,5 @@
 "use client";
-import type { Metadata } from "next";
+
 import {
   AppShell,
   AppShellHeader,
@@ -7,11 +7,8 @@ import {
   ColorSchemeScript,
   createTheme,
   DEFAULT_THEME,
-  Divider,
-  Group,
   MantineProvider,
   mergeMantineTheme,
-  Text,
   virtualColor,
 } from "@mantine/core";
 import localFont from "next/font/local";

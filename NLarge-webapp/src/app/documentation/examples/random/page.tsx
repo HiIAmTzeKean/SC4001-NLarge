@@ -137,7 +137,8 @@ export default function ExampleRandom() {
             />
             <Text c="dimmed" size="md">
               We will be explaining the different modes of the Random Augmenter,
-              including an example using the 'Rotten Tomatoes' dataset later on.
+              including an example using the &apos;Rotten Tomatoes&apos; dataset
+              later on.
             </Text>
             <Text c="dimmed" size="md">
               As we can observe from the name of the augmenter, the Random
@@ -147,7 +148,7 @@ export default function ExampleRandom() {
               predefined probability. {"\n\n"}This introduces variability into
               the dataset, potentially improving the robustness and
               generalization capabilities of NLP models. Before we begin the
-              explanation for each Action mode, let's first import and
+              explanation for each Action mode, let&apos;s first import and
               initialize the augmenter.
             </Text>
             <Text c="primary" size="lg" fw="bolder">
@@ -194,8 +195,9 @@ export default function ExampleRandom() {
             />
             <Text c="dimmed" size="md">
               The Swap Action randomly samples the target sequence with the
-              predefined probability and swaps it's position with the adjacent
-              words if the sampled word is not in the 'stop_words' argument.
+              predefined probability and swaps it&apos;s position with the
+              adjacent words if the sampled word is not in the
+              &apos;stop_words&apos; argument.
             </Text>
             <Text c="primary" size="lg" fw="bolder">
               Arguments:
@@ -259,9 +261,9 @@ export default function ExampleRandom() {
             <Text c="dimmed" size="md">
               The Substitute Action randomly samples the target sequence with
               the predefined probability. It then substitutes the sampled
-              word(s) with words chosen randomly in the provided 'target_words'
-              argument if the sampled word(s) is not in the 'stop_words'
-              argument.
+              word(s) with words chosen randomly in the provided
+              &apos;target_words&apos; argument if the sampled word(s) is not in
+              the &apos;stop_words&apos; argument.
             </Text>
             <Text c="primary" size="lg" fw="bolder">
               Arguments:
@@ -331,7 +333,7 @@ export default function ExampleRandom() {
             <Text c="dimmed" size="md">
               The Delete Action randomly samples the target sequence with the
               predefined probability. It then deletes the sampled word if the
-              sampled word is not in the 'stop_words' argument.
+              sampled word is not in the &apos;stop_words&apos; argument.
             </Text>
             <Text c="primary" size="lg" fw="bolder">
               Arguments:
@@ -397,7 +399,7 @@ export default function ExampleRandom() {
               index in the target sequence. The set of continuous words from the
               sampled starting to the sampled ending index will then be checked
               for the existence of stopwords. If the set of continuous words
-              does not contain 'stopwords', it will be deleted.
+              does not contain &apos;stopwords&apos;, it will be deleted.
             </Text>
             <Text c="primary" size="lg" fw="bolder">
               Arguments:
@@ -463,8 +465,9 @@ export default function ExampleRandom() {
               Argumentation on a dataset. This example will also function as a
               proof of concept for the NLarge Random Augmentation. This example
               will be evaluating augmented datasets on RNN and LSTM based on the
-              loss and accuracy metrics. We have chosen the 'rotten tomatoes'
-              dataset due to it's small size that is prone to overfitting.
+              loss and accuracy metrics. We have chosen the &apos;rotten
+              tomatoes&apos; dataset due to it&apos;s small size that is prone
+              to overfitting.
             </Text>
             <Text c="primary" size="lg" fw="bolder">
               Importing libraries:
@@ -488,7 +491,7 @@ export default function ExampleRandom() {
               className="w-full rounded-sm outline-1 outline outline-slate-600"
             />
             <Text c="primary" size="lg" fw="bolder">
-              Downloading 'rotten-tomatoes' dataset
+              Downloading &apos;rotten-tomatoes&apos; dataset
             </Text>
             <div
               id="exampleRNN_download"
@@ -634,7 +637,7 @@ pipeline_augmented_100.train_model(n_epochs=10)
             />
 
             <Text c="primary" size="lg" fw="bolder">
-              RNN: Evaluating the models' performance
+              RNN: Evaluating the models&apos; performance
             </Text>
             <div
               id="exampleRNN_eval"
@@ -670,12 +673,12 @@ pipeline_augmented_100.plot_acc(title="100% Random Substitute on RNN")
               and accuracy of the RNN model.
             </Text>
             <Text c="primary" size="md">
-              Models' Loss
+              Models&apos; Loss
             </Text>
             <Image src="/graphs/rnn_random_sub_10_loss.png" />
             <Image src="/graphs/rnn_random_sub_100_loss.png" />
             <Text c="primary" size="md">
-              Models' Accuracy
+              Models&apos; Accuracy
             </Text>
             <Image src="/graphs/rnn_random_sub_10_acc.png" />
             <Image src="/graphs/rnn_random_sub_100_acc.png" />
@@ -726,7 +729,7 @@ pipeline_augmented_100_LSTM.train_model(n_epochs=10)
             />
 
             <Text c="primary" size="lg" fw="bolder">
-              LSTM: Evaluating the models' performance
+              LSTM: Evaluating the models&apos; performance
             </Text>
             <div
               id="exampleLSTM_eval"
@@ -762,12 +765,12 @@ pipeline_augmented_100_LSTM.plot_acc(title="100% Random Substitute on LSTM")
               and accuracy of the LSTM model.
             </Text>
             <Text c="primary" size="md">
-              Models' Loss
+              Models&apos; Loss
             </Text>
             <Image src="/graphs/lstm_random_sub_10_loss.png" />
             <Image src="/graphs/lstm_random_sub_100_loss.png" />
             <Text c="primary" size="md">
-              Models' Accuracy
+              Models&apos; Accuracy
             </Text>
             <Image src="/graphs/lstm_random_sub_10_acc.png" />
             <Image src="/graphs/lstm_random_sub_100_acc.png" />

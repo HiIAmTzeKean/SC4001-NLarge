@@ -4,12 +4,10 @@ import {
   Divider,
   Group,
   rem,
-  Skeleton,
   Stack,
   Text,
   Title,
 } from "@mantine/core";
-import { IconPoint } from "@tabler/icons-react";
 import Link from "next/link";
 
 export default function DocumentationUsage() {
