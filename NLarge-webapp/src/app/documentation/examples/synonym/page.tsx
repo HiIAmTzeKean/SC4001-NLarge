@@ -19,24 +19,14 @@ import { IconListSearch } from "@tabler/icons-react";
 
 const links = [
   { label: "Introduction", link: "#introduction", order: 1 },
-  { label: "Importing & Initialization", link: "#import", order: 2 },
-  { label: "Random Swap", link: "#randomswap", order: 1 },
-  { label: "Random Substitute", link: "#randomsubstitute", order: 1 },
-  { label: "Random Delete", link: "#randomdelete", order: 1 },
-  { label: "Random Crop", link: "#randomcrop", order: 1 },
-  { label: "Code Example ", link: "#exampleRNN", order: 1 },
-  { label: "Library Imports", link: "#exampleRNN_import", order: 2 },
-  { label: "Dataset Download", link: "#exampleRNN_download", order: 2 },
-  { label: "Dataset Augmentation", link: "#exampleRNN_augment", order: 2 },
-  { label: "RNN: Model training", link: "#exampleRNN_training", order: 2 },
-  { label: "RNN: Evaluating performance", link: "#exampleRNN_eval", order: 3 },
-  { label: "LSTM: Model training", link: "#exampleLSTM_training", order: 2 },
-  {
-    label: "LSTM: Evaluating performance",
-    link: "#exampleLSTM_eval",
-    order: 3,
-  },
-  { label: "Analysis of Results", link: "#example_analysis", order: 2 },
+  { label: "Key Components", link: "#keyComponents", order: 1 },
+  { label: "Importing SynonymAugmenter", link: "#import", order: 1 },
+  { label: "Parameters", link: "#parameters", order: 1 },
+  { label: "Single Sentence Usage", link: "#singleUsage", order: 1 },
+  { label: "Full Example", link: "#fullExample", order: 1 },
+  { label: "Full Code ", link: "#fullCode", order: 2 },
+  { label: "Model Loss", link: "#modelLoss", order: 2 },
+  { label: "Model Accuracy", link: "#modelAcc", order: 2 },
 ];
 
 export default function ExampleSynonym() {
@@ -196,6 +186,12 @@ export default function ExampleSynonym() {
             <Text c="primary" size="lg" fw="bolder">
               Import & Initialize NLarge Synonym Augmenter
             </Text>
+            <div
+              id="import"
+              ref={(el) => {
+                sectionRefs.current[2] = el;
+              }}
+            />
             <Text c="dimmed" size="md">
               Before we proceed further, let us first import and initialize the
               SynonymAugmenter instance.
@@ -219,11 +215,9 @@ syn_aug = SynonymAugmenter()
               Parameters
             </Text>
             <div
-              id="params"
+              id="parameters"
               ref={(el) => {
-                if (el) {
-                  sectionRefs.current[2] = el;
-                }
+                sectionRefs.current[3] = el;
               }}
             />
             <Group>
@@ -285,6 +279,12 @@ syn_aug = SynonymAugmenter()
             <Text c="primary" size="xl" fw="bolder">
               Single Sentence Usage Example
             </Text>
+            <div
+              id="singleUsage"
+              ref={(el) => {
+                sectionRefs.current[4] = el;
+              }}
+            />
             <CodeHighlightTabs
               code={[
                 {
@@ -314,30 +314,26 @@ The quick brown fox jumps over the lazy dog.
               Full Example of Synonym Augmentation
             </Text>
             <div
-              id="exampleRNN"
+              id="fullExample"
               ref={(el) => {
-                if (el) {
-                  sectionRefs.current[6] = el;
-                }
+                sectionRefs.current[5] = el;
               }}
             />
             <Text c="dimmed" size="md">
               For your reference, below is a full example of the NLarge Synonym
               Argumentation on a dataset. This example will also function as a
               proof of concept for the NLarge Synonym Augmentation. This example
-              will be evaluating augmented datasets on RNN and LSTM based on the
-              loss and accuracy metrics. We have chosen the 'rotten tomatoes'
-              dataset due to it's small size that is prone to overfitting.
+              will be evaluating augmented datasets on LSTM based on the loss
+              and accuracy metrics. We have chosen the 'rotten tomatoes' dataset
+              due to it's small size that is prone to overfitting.
             </Text>
             <Text c="primary" size="lg" fw="bolder">
-              Importing libraries:
+              Full Code:
             </Text>
             <div
-              id="exampleRNN_import"
+              id="fullCode"
               ref={(el) => {
-                if (el) {
-                  sectionRefs.current[7] = el;
-                }
+                sectionRefs.current[6] = el;
               }}
             />
             <CodeHighlightTabs
@@ -349,33 +345,8 @@ import datasets
 from datasets import Dataset, Features, Value, concatenate_datasets
 from NLarge.dataset_concat import augment_data, MODE
 from NLarge.pipeline import TextClassificationPipeline
-from NLarge.model.RNN import TextClassifierRNN, TextClassifierLSTM                  
-                  `,
-                  language: "python",
-                },
-              ]}
-              className="w-full rounded-sm outline-1 outline outline-slate-600"
-            />
-            <Text c="primary" size="lg" fw="bolder">
-              Downloading 'rotten-tomatoes' dataset
-            </Text>
-            <div
-              id="exampleRNN_download"
-              ref={(el) => {
-                if (el) {
-                  sectionRefs.current[8] = el;
-                }
-              }}
-            />
-            <Text c="dimmed" size="md">
-              Here, we download the dataset and ensure that the features are in
-              the correct format for our dataset augmentation later on.
-            </Text>
-            <CodeHighlightTabs
-              code={[
-                {
-                  fileName: "python",
-                  code: `
+from NLarge.model.RNN import TextClassifierLSTM                  
+
 original_train_data, original_test_data = datasets.load_dataset(
 "rotten_tomatoes", split=["train", "test"]
 )  
@@ -387,220 +358,69 @@ original_train_data = Dataset.from_dict(
     },
     features=features,
 )  
-                  `,
-                  language: "python",
-                },
-              ]}
-              className="w-full rounded-sm outline-1 outline outline-slate-600"
-            />
 
-            <Text c="primary" size="lg" fw="bolder">
-              Applying augmentation and enlarging dataset
-            </Text>
-            <div
-              id="exampleRNN_augment"
-              ref={(el) => {
-                if (el) {
-                  sectionRefs.current[9] = el;
-                }
-              }}
-            />
-            <Text c="dimmed" size="md">
-              We will be performing a 100% Random Synonym Augmentation on the
-              dataset. This would increase the dataset size by 100%.
-            </Text>
-            <CodeHighlightTabs
-              code={[
-                {
-                  fileName: "python",
-                  code: `
-# Augment and increase size by 100%
+# Augment and increase size by 5%, 10%
 percentage= {
-    MODE.SYNONYM.WORDNET: 1.00,
+    MODE.SYNONYM.WORDNET: 0.05,
 }
-augmented_synonym_100 = augment_data(original_train_data, percentage)
+augmented_synonym_5 = augment_data(original_train_data, percentage)
+
+percentage= {
+    MODE.SYNONYM.WORDNET: 0.10,
+}
+augmented_synonym_10 = augment_data(original_train_data, percentage)
 
 # Convert augmented data into Datasets
-augmented_dataset_100 = Dataset.from_dict(
+augmented_dataset_5 = Dataset.from_dict(
     {
-        "text": [item["text"] for item in augmented_synonym_100],
-        "label": [item["label"] for item in augmented_synonym_100],
+        "text": [item["text"] for item in augmented_synonym_5],
+        "label": [item["label"] for item in augmented_synonym_5],
+    },
+    features=features,
+)
+augmented_dataset_10 = Dataset.from_dict(
+    {
+        "text": [item["text"] for item in augmented_synonym_10],
+        "label": [item["label"] for item in augmented_synonym_10],
     },
     features=features,
 )
 
 # Concatenate original and augmented datasets
-augmented_train_data_100 = concatenate_datasets(
-    [original_train_data, augmented_dataset_100]
+augmented_train_data_5 = concatenate_datasets(
+    [original_train_data, augmented_dataset_5]
 )
-                  `,
-                  language: "python",
-                },
-              ]}
-              className="w-full rounded-sm outline-1 outline outline-slate-600"
-            />
+augmented_train_data_10 = concatenate_datasets(
+    [original_train_data, augmented_dataset_10]
+)
 
-            <Text c="primary" size="lg" fw="bolder">
-              RNN: Loading the pipeline & model training
-            </Text>
-            <div
-              id="exampleRNN_training"
-              ref={(el) => {
-                if (el) {
-                  sectionRefs.current[10] = el;
-                }
-              }}
-            />
-            <Text c="dimmed" size="md">
-              Here, we will initialize and train a baseline RNN pipeline with
-              the un-augmented dataset and a RNN pipeline with the augmented
-              dataset.
-            </Text>
-            <CodeHighlightTabs
-              code={[
-                {
-                  fileName: "python",
-                  code: `
-pipeline_baseline = TextClassificationPipeline(
-    augmented_data=original_train_data,
+# Initialize Pipelines
+pipeline_augmented_5 = TextClassificationPipeline(
+    augmented_data=augmented_train_data_5,
     test_data=original_test_data,
     max_length=128,
     test_size=0.2,
-    model_class=TextClassifierRNN,
+    model_class=TextClassifierLSTM,
 )
-pipeline_augmented_100 = TextClassificationPipeline(
-    augmented_data=augmented_train_data_100,
-    test_data=original_test_data,
-    max_length=128,
-    test_size=0.2,
-    model_class=TextClassifierRNN,
-)
-pipeline_baseline.train_model(n_epochs=10)
-pipeline_augmented_100.train_model(n_epochs=10)
-                  `,
-                  language: "python",
-                },
-              ]}
-              className="w-full rounded-sm outline-1 outline outline-slate-600"
-            />
-
-            <Text c="primary" size="lg" fw="bolder">
-              RNN: Evaluating the models' performance
-            </Text>
-            <div
-              id="exampleRNN_eval"
-              ref={(el) => {
-                if (el) {
-                  sectionRefs.current[11] = el;
-                }
-              }}
-            />
-            <Text c="dimmed" size="md">
-              Plotting the loss and accuracy graphs, we can visualize the
-              performance improvements between the two amount of augmentation on
-              RNN.
-            </Text>
-            <CodeHighlightTabs
-              code={[
-                {
-                  fileName: "python",
-                  code: `
-pipeline_augmented_10.plot_loss(title="10% Random Substitute on RNN")
-pipeline_augmented_100.plot_loss(title="100% Random Substitute on RNN")
-pipeline_augmented_10.plot_acc(title="10% Random Substitute on RNN")
-pipeline_augmented_100.plot_acc(title="100% Random Substitute on RNN")
-
-                  `,
-                  language: "python",
-                },
-              ]}
-              className="w-full rounded-sm outline-1 outline outline-slate-600"
-            />
-            <Text c="dimmed" size="md">
-              Looking at the graphs, we can see a stark improvement on both loss
-              and accuracy of the RNN model.
-            </Text>
-            <Text c="primary" size="md">
-              Models' Loss
-            </Text>
-            <Image src="/graphs/rnn_random_sub_10_loss.png" />
-            <Image src="/graphs/rnn_random_sub_100_loss.png" />
-            <Text c="primary" size="md">
-              Models' Accuracy
-            </Text>
-            <Image src="/graphs/rnn_random_sub_10_acc.png" />
-            <Image src="/graphs/rnn_random_sub_100_acc.png" />
-
-            <Divider my={2} />
-
-            <Text c="primary" size="lg" fw="bolder">
-              LSTM: Loading the pipeline & model training
-            </Text>
-            <div
-              id="exampleLSTM_training"
-              ref={(el) => {
-                if (el) {
-                  sectionRefs.current[12] = el;
-                }
-              }}
-            />
-            <Text c="dimmed" size="md">
-              Here, we will initialize and train the pipeline using LSTM and the
-              augmented datasets.
-            </Text>
-            <CodeHighlightTabs
-              code={[
-                {
-                  fileName: "python",
-                  code: `
-pipeline_augmented_10_LSTM = TextClassificationPipeline(
+pipeline_augmented_10 = TextClassificationPipeline(
     augmented_data=augmented_train_data_10,
     test_data=original_test_data,
     max_length=128,
     test_size=0.2,
     model_class=TextClassifierLSTM,
 )
-pipeline_augmented_100_LSTM = TextClassificationPipeline(
-    augmented_data=augmented_train_data_100,
-    test_data=original_test_data,
-    max_length=128,
-    test_size=0.2,
-    model_class=TextClassifierLSTM,
-)
-pipeline_augmented_10_LSTM.train_model(n_epochs=10)
-pipeline_augmented_100_LSTM.train_model(n_epochs=10)
-                  `,
-                  language: "python",
-                },
-              ]}
-              className="w-full rounded-sm outline-1 outline outline-slate-600"
-            />
 
-            <Text c="primary" size="lg" fw="bolder">
-              LSTM: Evaluating the models' performance
-            </Text>
-            <div
-              id="exampleLSTM_eval"
-              ref={(el) => {
-                if (el) {
-                  sectionRefs.current[13] = el;
-                }
-              }}
-            />
-            <Text c="dimmed" size="md">
-              Plotting the loss and accuracy graphs, we can visualize the
-              performance improvements between the two amount of augmentation
-              when used on LSTM.
-            </Text>
-            <CodeHighlightTabs
-              code={[
-                {
-                  fileName: "python",
-                  code: `
-pipeline_augmented_10_LSTM.plot_loss(title="10% Random Substitute on LSTM")
-pipeline_augmented_100_LSTM.plot_loss(title="100% Random Substitute on LSTM")
-pipeline_augmented_10_LSTM.plot_acc(title="10% Random Substitute on LSTM")
-pipeline_augmented_100_LSTM.plot_acc(title="100% Random Substitute on LSTM")
+# Train Models
+pipeline_augmented_5.train_model(n_epochs=10)
+pipeline_augmented_10.train_model(n_epochs=10)
+
+# Plot Loss 
+pipeline_augmented_5.plot_loss(title="50% Synonym Augment on LSTM")
+pipeline_augmented_10.plot_loss(title="200% Synonym Augment on LSTM")
+
+# Plot Accuracy
+pipeline_augmented_5.plot_acc(title="5% Synonym Augment on LSTM")
+pipeline_augmented_10.plot_acc(title="10% Synonym Augment on LSTM")
 
                   `,
                   language: "python",
@@ -608,50 +428,34 @@ pipeline_augmented_100_LSTM.plot_acc(title="100% Random Substitute on LSTM")
               ]}
               className="w-full rounded-sm outline-1 outline outline-slate-600"
             />
-            <Text c="dimmed" size="md">
-              Looking at the graphs, we can see a stark improvement on both loss
-              and accuracy of the LSTM model.
-            </Text>
             <Text c="primary" size="md">
               Models' Loss
             </Text>
-            <Image src="/graphs/lstm_random_sub_10_loss.png" />
-            <Image src="/graphs/lstm_random_sub_100_loss.png" />
+            <div
+              id="modelLoss"
+              ref={(el) => {
+                sectionRefs.current[7] = el;
+              }}
+            />
+            <Group justify="center">
+              <Image src="/graphs/lstm_synonym_5_loss.png" />
+              <Image src="/graphs/lstm_synonym_10_loss.png" />
+            </Group>
+
             <Text c="primary" size="md">
               Models' Accuracy
             </Text>
-            <Image src="/graphs/lstm_random_sub_10_acc.png" />
-            <Image src="/graphs/lstm_random_sub_100_acc.png" />
-
-            <Text c="primary" size="lg" fw="bolder">
-              Analysis of Results
-            </Text>
             <div
-              id="example_analysis"
+              id="modelAcc"
               ref={(el) => {
-                if (el) {
-                  sectionRefs.current[14] = el;
-                }
+                sectionRefs.current[8] = el;
               }}
             />
-            <Text c="dimmed" size="md">
-              The results of our experiment indicate that the performance of the
-              models keeps increasing with higher levels of augmentation. This
-              suggests that data augmentation provides a clear benefit for
-              sentiment classification tasks. Additionally, the findings
-              highlight the importance of data augmentation in enhancing the
-              diversity and robustness of training datasets, leading to imporved
-              model performance.
-            </Text>
-            <Text c="dimmed" size="md">
-              The data augmentation techniques mitigates overfitting by
-              effectively increasing the size of the training dataset, reducing
-              the likelihood of the model memorizing specific examples and
-              encouraging it to learn general patterns instead. The introduction
-              of variations in the training data makes the model more robust to
-              noise and variations in real world input data, which is crucial
-              for achieving good performance on unseen data.
-            </Text>
+            <Group justify="center">
+              <Image src="/graphs/lstm_synonym_5_acc.png" />
+              <Image src="/graphs/lstm_synonym_10_acc.png" />
+            </Group>
+
             <Divider my={2} />
           </Stack>
 
