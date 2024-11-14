@@ -154,7 +154,9 @@ validation dataset. We will then retrain the model using the augmented dataset
 and compare the performance metrics to assess the impact of DA on model
 performance.
 
-We will also include
+We will also include a comparison of the performance of the RNN model with a
+Long Short-Term Memory (LSTM) model to evaluate the impact of the model
+architecture on the effectiveness of DA techniques.
 
 \subsubsection{Model Architecture for Sentiment Classification}
 
@@ -176,14 +178,14 @@ dataset through various means to increase the volume of the corpus in
 meaningful manners that will help the model learn and overfit less to the
 training data.
 
-\section{DA using Random Substitution}
+\section{DA using Random Swap}
 
-In this subsection, we analyze the performance of DA using random substitution.
+In this subsection, we analyze the performance of DA using random swap.
 
 Let \( X = \{x_1, x_2, \ldots, x_n\} \) be a sequence of words in a text, where
 \( x_i \) represents the \( i \)-th word in the sequence.
 
-The random substitution process can be defined as follows:
+The random swap process can be defined as follows:
 
 For each word \( x_i \) in the sequence \( X \), with a probability \( p \),
 swap \( x_i \) with its adjacent word if \( x_i \) is not a stop word. Where
@@ -197,15 +199,15 @@ swap \( x_i \) with its adjacent word if \( x_i \) is not a stop word. Where
   \end{cases}
 \]
 
-where \( x_i' \) is the new word after substitution. The augmented sequence \(
+where \( x_i' \) is the new word after swap. The augmented sequence \(
 X' = \{x_1', x_2', \ldots, x_n'\} \) is then used as the new training sample.
 
-The random substitution process involves iterating over each word in the
+The random swap process involves iterating over each word in the
 sequence and swapping with a predefined probability \( p \). This introduces
 variability into the dataset, potentially improving the robustness and
 generalization capabilities of NLP models.
 
-To evaluate the effectiveness of random substitution, we conducted experiments
+To evaluate the effectiveness of random swap, we conducted experiments
 with different levels of augmentation: 5\%, 10\%, and 20\% of the dataset. The
 performance of the models trained with these augmented datasets was assessed
 using accuracy score.
@@ -221,7 +223,6 @@ These findings highlight the importance of data augmentation in enhancing the
 diversity and robustness of training datasets, leading to improved model
 performance.
 
-% insert image 
 \begin{figure}[ht]
   \centering
   \begin{subfigure}[b]{0.3\textwidth}
@@ -247,25 +248,28 @@ performance.
 
 The observed trend, where the performance of the RNN model improves with higher
 levels of data augmentation, can be attributed to several key factors. Firstly,
-data augmentation techniques like random substitution introduce increased data
-diversity by exposing the model to a wider range of vocabulary and sentence
+data augmentation techniques like random swap introduce increased data
+diversity by exposing the model to a wider range of sentence
 structures. This diversity helps the model learn more robust representations,
 enhancing its ability to generalize to unseen examples.
 
-Secondly, data augmentation mitigates overfitting by effectively increasing the
-size of the training dataset, reducing the likelihood of the model memorizing
-specific examples and encouraging it to learn general patterns instead.
-Additionally, the introduction of variations in the training data makes the
-model more robust to noise and variations in real-world input data. This
-robustness is crucial for achieving good performance on unseen data.
+Secondly, data augmentation mitigates over-fitting by effectively increasing
+the size of the training dataset, reducing the likelihood of the model
+memorizing specific examples and encouraging it to learn general patterns
+instead. Additionally, the introduction of variations in the training data
+makes the model more robust to noise and variations in real-world input data.
+This robustness is crucial for achieving good performance on unseen data. An example
+would be a change in the sentence structure from \code{I love this movie} to
+\code{I movie this love}. which can help the model learn patterns that might be
+found in the human speech patterns and thus generalize better on the test data.
 
 Furthermore, data augmentation acts as a form of regularization, preventing the
-model from becoming too complex and overfitting the training data. By providing
-a more comprehensive training dataset, data augmentation improves the model's
-generalization capabilities, leading to better performance on validation and
-test datasets. Collectively, these factors contribute to the model's enhanced
-ability to learn effectively from the training data and perform better on
-unseen examples.
+model from becoming too complex and over-fitting the training data. By
+providing a more comprehensive training dataset, data augmentation improves the
+model's generalization capabilities, leading to better performance on
+validation and test datasets. Collectively, these factors contribute to the
+model's enhanced ability to learn effectively from the training data and
+perform better on unseen examples.
 
 \section{DA using Synonym Substitution}
 
@@ -644,7 +648,8 @@ The summarizer model performs almost the same as the LLM model in the previous
 section. The performance of the model (Figure \ref{fig:llm_summerizer})
 compared to the random and synonym techniques did not show a clear advantage
 when augmentation is below 20\%. The performance gain only starts to show when
-augmentation levels continued to increase.
+augmentation levels continued to increase. The summarizer model chosen is the
+\textbf{facebook Bart} model.
 
 \begin{figure}[ht]
   \centering
@@ -727,19 +732,18 @@ different methods that are available.
 
 \subsection{Discussion}
 
-The experiments conducted in this study demonstrate the impact of data
-augmentation (DA) techniques on the performance of NLP models for sentiment
-analysis. Traditional methods such as random substitution and synonym
-replacement provided a baseline improvement in model performance by introducing
-variability into the training data. However, these methods often fell short in
-capturing the nuanced semantics and contextual dependencies inherent in natural
-language.
+The experiments conducted in this study demonstrate the impact of DA techniques
+on the performance of NLP models for sentiment analysis. Traditional methods
+such as random substitution and synonym replacement provided a baseline
+improvement in model performance by introducing variability into the training
+data. However, these methods often fell short in capturing the nuanced
+semantics and contextual dependencies inherent in natural language.
 
-The introduction of advanced DA techniques using Large Language Models (LLMs)
-marked a substantial improvement over traditional methods. Specifically, the
-use of LLMs for summarization and paraphrasing generated high-quality augmented
-data that significantly enhanced model performance. The results indicated that
-models trained with LLM-augmented data achieved higher accuracy and better
+The introduction of advanced DA techniques using LLMs marked a substantial
+improvement over traditional methods. Specifically, the use of LLMs for
+summarization and paraphrasing generated high-quality augmented data that
+significantly enhanced model performance. The results indicated that models
+trained with LLM-augmented data achieved higher accuracy and better
 generalization capabilities compared to those trained with traditional DA
 methods.
 
@@ -750,11 +754,10 @@ These findings suggest that LLMs can generate diverse and contextually relevant
 samples that are beneficial for training robust NLP models.
 
 One key observation was that the use of summarizers to generate augmented
-samples resulted in fewer out-of-vocabulary (OOV) counts. This allowed the
-models with a static vocabulary to learn more effectively from the augmented
-data. Additionally, summarizers were found to be more capable of capturing the
-essence of the text and generating relevant samples compared to paraphrasing
-techniques.
+samples resulted in fewer OOV counts. This allowed the models with a static
+vocabulary to learn more effectively from the augmented data. Additionally,
+summarizers were found to be more capable of capturing the essence of the text
+and generating relevant samples compared to paraphrasing techniques.
 
 Interestingly, the performance of the RNN model was generally better than that
 of the LSTM model on the Rotten Tomatoes dataset. This can be attributed to
