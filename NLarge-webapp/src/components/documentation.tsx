@@ -1,7 +1,7 @@
 import { Divider, Text, Title } from "@mantine/core";
 
 type props = {
-  className?: String;
+  className?: string;
   sectionsRefs: React.MutableRefObject<HTMLDivElement[]>;
 };
 
