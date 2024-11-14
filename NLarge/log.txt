@@ -524,3 +524,10 @@ NLarge.random - INFO - RandomAugmenter initialized
 NLarge.random - INFO - RandomAugmenter initialized
 NLarge.random - INFO - RandomAugmenter initialized
 NLarge.random - INFO - RandomAugmenter initialized
+NLarge - INFO - Completed configuring logger()!
+NLarge.synonym - INFO - SynonymAugmenter initialized
+NLarge.synonym - INFO - SynonymAugmenter initialized
+NLarge.synonym - INFO - SynonymAugmenter initialized
+NLarge.synonym - INFO - SynonymAugmenter initialized
+NLarge.synonym - INFO - SynonymAugmenter initialized
+NLarge - INFO - Completed configuring logger()!

@@ -39,7 +39,7 @@ const links = [
   { label: "Analysis of Results", link: "#example_analysis", order: 2 },
 ];
 
-export default function ExampleRandom() {
+export default function ExampleSynonym() {
   const [TOCactive, setTOCactive] = useState(0);
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]); // Store references to each section
 
@@ -113,11 +113,11 @@ export default function ExampleRandom() {
               mt="xl"
               ta="left"
             >
-              Random Augmenter
+              Synonym Augmenter
             </Title>
             <Text c="dimmed" size="lg">
-              Detailed guide to using the Random Augmenter. This page also
-              serves as a proof of concept for the Random Augmenter.
+              Detailed guide to using the Synonym Augmenter. This page also
+              serves as a proof of concept for the Synonym Augmenter.
             </Text>
           </Stack>
         </Group>
@@ -136,107 +136,172 @@ export default function ExampleRandom() {
               }}
             />
             <Text c="dimmed" size="md">
-              We will be explaining the different modes of the Random Augmenter,
-              including an example using the 'Rotten Tomatoes' dataset later on.
-            </Text>
-            <Text c="dimmed" size="md">
-              As we can observe from the name of the augmenter, the Random
-              Augmenter revolves around using a probability defined to modify a
-              sequence. The random augmentation process involves iterating over
-              each word in the sequence and performing the defined Action with a
-              predefined probability. {"\n\n"}This introduces variability into
-              the dataset, potentially improving the robustness and
-              generalization capabilities of NLP models. Before we begin the
-              explanation for each Action mode, let's first import and
-              initialize the augmenter.
+              The Synonym Augmenter enables data augmentation for text sentiment
+              classification by introducing variability in text through synonym
+              replacement. This augmenter enhances a dataset by augmenting words
+              with their synonyms, which can improve model robustness by
+              introducing semantic variability without changing a sentiment.
+              <br />
+              <br /> The Synonym Augmenter samples word in the target sequence
+              with a predefined probability and replace it with a randomly
+              chosen synonym from a set of synonyms of the sampled word.
+              <br /> <br />
+              <i>
+                In the current version of NLarge, the set of synonyms can also
+                be drawn from <Code bg="dimmed">WordNet</Code>, an extensive
+                lexical database.
+              </i>
             </Text>
             <Text c="primary" size="lg" fw="bolder">
-              Importing & initializing the library
+              Key Components
             </Text>
             <div
-              id="import"
+              id="keyComponents"
               ref={(el) => {
                 sectionRefs.current[1] = el;
               }}
             />
-            <Text c="dimmed" size="md">
-              Before using the library, you should first import and initialize
-              the random augmenter. Since there are different modes to the
-              Random Augmenter, be sure to import the Action class too!
+            <Text c="primary" size="md" fw="bolder">
+              WordNet
             </Text>
-            <Text c="primary" size="md">
-              Import & Initialize NLarge Random Augmenter:
+            <Text c="dimmed" size="md">
+              <Code bg="dimmed">WordNet</Code> provides synonym and antonym
+              lookup, with optional parts of speech (POS) filtering. The POS
+              tagging functionality identifies relevant grammatical structures
+              for more accurate augmentation.
+            </Text>
+            <Text c="primary" size="md" fw="bolder">
+              PartsOfSpeech
+            </Text>
+            <Text c="dimmed" size="md">
+              Our POS functionality maps between POS tags and constituent tags
+              to ensure compatibility with <Code bg="dimmed">WordNet</Code>'s
+              POS requirements. <br /> <br />{" "}
+              <i>
+                The current version supports noun, verb, adjective and adverb
+                classifications.
+              </i>
+            </Text>
+            <Text c="primary" size="md" fw="bolder">
+              SynonymAugmenter
+            </Text>
+            <Text c="dimmed" size="md">
+              The augmenter uses the <Code bg="dimmed">WordNet</Code> class to
+              perform augmentation by replacing words with synonyms based on
+              user-defined criteria. It utilizes POS tagging to determine
+              eligible words for substituition, while skip lists (stop words and
+              regex patterns) can prevent certain words from being replaced.
+            </Text>
+
+            <Text c="primary" size="lg" fw="bolder">
+              Import & Initialize NLarge Synonym Augmenter
+            </Text>
+            <Text c="dimmed" size="md">
+              Before we proceed further, let us first import and initialize the
+              SynonymAugmenter instance.
             </Text>
             <CodeHighlightTabs
               code={[
                 {
                   fileName: "python",
-                  code: "from NLarge.random import RandomAugmenter, Action\nrandom_aug = RandomAugmenter()",
+                  code: `
+from NLarge.synonym import SynonymAugmenter
+
+syn_aug = SynonymAugmenter()
+`,
                   language: "python",
                 },
               ]}
               className="w-full rounded-sm outline-1 outline outline-slate-600"
             />
-            <Text c="dimmed" size="md">
-              Great! Now let us go through each Random Augment Mode.
-            </Text>
-            <Divider my={2} />
+
             <Text c="primary" size="xl" fw="bolder">
-              Random Swap
+              Parameters
             </Text>
             <div
-              id="randomswap"
+              id="params"
               ref={(el) => {
                 if (el) {
                   sectionRefs.current[2] = el;
                 }
               }}
             />
-            <Text c="dimmed" size="md">
-              The Swap Action randomly samples the target sequence with the
-              predefined probability and swaps it's position with the adjacent
-              words if the sampled word is not in the 'stop_words' argument.
-            </Text>
-            <Text c="primary" size="lg" fw="bolder">
-              Arguments:
-            </Text>
             <Group>
-              <Code>data</Code>
-              <Text>Input text to augment</Text>
-            </Group>
-            <Group>
-              <Code>action</Code>
+              <Code bg="dimmed">data</Code>
               <Text>
-                Action to perform, in the case of using Random Swap,
-                action=Action.SWAP
+                (str) - Input text to augment
+                <br /> <i>example: 'This is a test sentence.'</i>
               </Text>
             </Group>
             <Group>
-              <Code>aug_percent</Code>
-              <Text>Percentage of words in sequence to augment</Text>
+              <Code bg="dimmed">aug_src</Code>
+              <Text>
+                (str) - Augmentation source, currently supports only "wordnet".{" "}
+                <br />
+                <i>default: 'wordnet'</i>
+              </Text>
             </Group>
             <Group>
-              <Code>aug_min</Code>
-              <Text>Minimum number of words to augment</Text>
+              <Code bg="dimmed">lang</Code>
+              <Text>
+                (str) - Language of the input text. <br /> <i>default: 'eng'</i>
+              </Text>
             </Group>
             <Group>
-              <Code>aug_max</Code>
-              <Text>Maximum number of words to augment</Text>
+              <Code bg="dimmed">aug_max</Code>
+              <Text>
+                (int) - Maximum number of words to augment.
+                <br /> <i>default: 10</i>
+              </Text>
             </Group>
             <Group>
-              <Code>skipwords</Code>
-              <Text>List of words to skip augmentation</Text>
+              <Code bg="dimmed">aug_p</Code>
+              <Text>
+                (float) - Probability of augmenting each word. <br />{" "}
+                <i>default: 0.3</i>
+              </Text>
             </Group>
+            <Group>
+              <Code bg="dimmed">stopwords</Code>
+              <Text>
+                (list) - List of words to exclude from augmentation. <br />{" "}
+                <i>default: None</i>
+              </Text>
+            </Group>
+            <Group>
+              <Code bg="dimmed">tokenizer</Code>
+              <Text>
+                (function) - Function to tokenize the input text. <br />{" "}
+                <i>default: None</i>
+              </Text>
+            </Group>
+            <Group>
+              <Code bg="dimmed">reverse_tokenizer</Code>
+              <Text>
+                (function) - Function to detokenize the augmented text. <br />{" "}
+                <i>default: None</i>
+              </Text>
+            </Group>
+            <Text c="primary" size="xl" fw="bolder">
+              Single Sentence Usage Example
+            </Text>
             <CodeHighlightTabs
               code={[
                 {
                   fileName: "python",
-                  code: "input = \"This is a simple example sentence for testing.\"\nrandom_aug(data=input, action=Action.SWAP, aug_percent=0.3, aug_min=1, aug_max=10, skipwords=['is','a','for'])",
+                  code: `
+sample_text = "The quick brown fox jumps over the lazy dog."
+print(sample_text)
+syn_aug(sample_text, aug_src='wordnet', aug_p=0.3, aug_max=20)
+                  `,
                   language: "python",
                 },
                 {
                   fileName: "output",
-                  code: "('This is a simple example sentence for testing.', 'This is a sentence simple example for testing.')",
+                  code: `
+The quick brown fox jumps over the lazy dog.
+'The quick brown fox leap over the faineant dog.'
+                  `,
                   language: "python",
                 },
               ]}
@@ -246,209 +311,7 @@ export default function ExampleRandom() {
             <Divider my={2} />
 
             <Text c="primary" size="xl" fw="bolder">
-              Random Substitute
-            </Text>
-            <div
-              id="randomsubstitute"
-              ref={(el) => {
-                if (el) {
-                  sectionRefs.current[3] = el;
-                }
-              }}
-            />
-            <Text c="dimmed" size="md">
-              The Substitute Action randomly samples the target sequence with
-              the predefined probability. It then substitutes the sampled
-              word(s) with words chosen randomly in the provided 'target_words'
-              argument if the sampled word(s) is not in the 'stop_words'
-              argument.
-            </Text>
-            <Text c="primary" size="lg" fw="bolder">
-              Arguments:
-            </Text>
-            <Group>
-              <Code>data</Code>
-              <Text>Input text to augment</Text>
-            </Group>
-            <Group>
-              <Code>action</Code>
-              <Text>
-                Action to perform, in the case of using Random Substitute,
-                action=Action.SUBSTITUTE
-              </Text>
-            </Group>
-            <Group>
-              <Code>aug_percent</Code>
-              <Text>Percentage of words in sequence to augment</Text>
-            </Group>
-            <Group>
-              <Code>aug_min</Code>
-              <Text>Minimum number of words to augment</Text>
-            </Group>
-            <Group>
-              <Code>aug_max</Code>
-              <Text>Maximum number of words to augment</Text>
-            </Group>
-            <Group>
-              <Code>skipwords</Code>
-              <Text>List of words to skip augmentation</Text>
-            </Group>
-            <Group>
-              <Code>target_words</Code>
-              <Text>
-                List of words to substitue with the original sampled word
-              </Text>
-            </Group>
-            <CodeHighlightTabs
-              code={[
-                {
-                  fileName: "python",
-                  code: "input = \"This is a simple example sentence for testing.\"\nrandom_aug(data=input, action=Action.SUBSTITUTE, aug_percent=0.3, aug_min=1, aug_max=10, skipwords=['is','a', 'for'], target_words=['great', 'awesome'])",
-                  language: "python",
-                },
-                {
-                  fileName: "output",
-                  code: "('This is a simple example sentence for testing.', 'This is a simple great sentence for awesome')",
-                  language: "python",
-                },
-              ]}
-              className="w-full rounded-sm outline-1 outline outline-slate-600"
-            />
-
-            <Divider my={2} />
-
-            <Text c="primary" size="xl" fw="bolder">
-              Random Delete
-            </Text>
-            <div
-              id="randomdelete"
-              ref={(el) => {
-                if (el) {
-                  sectionRefs.current[4] = el;
-                }
-              }}
-            />
-            <Text c="dimmed" size="md">
-              The Delete Action randomly samples the target sequence with the
-              predefined probability. It then deletes the sampled word if the
-              sampled word is not in the 'stop_words' argument.
-            </Text>
-            <Text c="primary" size="lg" fw="bolder">
-              Arguments:
-            </Text>
-            <Group>
-              <Code>data</Code>
-              <Text>Input text to augment</Text>
-            </Group>
-            <Group>
-              <Code>action</Code>
-              <Text>
-                Action to perform, in the case of using Random Delete,
-                action=Action.DELETE
-              </Text>
-            </Group>
-            <Group>
-              <Code>aug_percent</Code>
-              <Text>Percentage of words in sequence to augment</Text>
-            </Group>
-            <Group>
-              <Code>aug_min</Code>
-              <Text>Minimum number of words to augment</Text>
-            </Group>
-            <Group>
-              <Code>aug_max</Code>
-              <Text>Maximum number of words to augment</Text>
-            </Group>
-            <Group>
-              <Code>skipwords</Code>
-              <Text>List of words to skip augmentation</Text>
-            </Group>
-            <CodeHighlightTabs
-              code={[
-                {
-                  fileName: "python",
-                  code: "input = \"This is a simple example sentence for testing.\"\nrandom_aug(data=input, action=Action.DELETE, aug_percent=0.3, aug_min=1, aug_max=10, skipwords=['is','a', 'for'] )",
-                  language: "python",
-                },
-                {
-                  fileName: "output",
-                  code: "('This is a simple example sentence for testing.', 'This is a sentence for testing.')",
-                  language: "python",
-                },
-              ]}
-              className="w-full rounded-sm outline-1 outline outline-slate-600"
-            />
-
-            <Divider my={2} />
-
-            <Text c="primary" size="xl" fw="bolder">
-              Random Crop
-            </Text>
-            <div
-              id="randomcrop"
-              ref={(el) => {
-                if (el) {
-                  sectionRefs.current[5] = el;
-                }
-              }}
-            />
-            <Text c="dimmed" size="md">
-              The Crop Action randomly samples a starting index and a ending
-              index in the target sequence. The set of continuous words from the
-              sampled starting to the sampled ending index will then be checked
-              for the existence of stopwords. If the set of continuous words
-              does not contain 'stopwords', it will be deleted.
-            </Text>
-            <Text c="primary" size="lg" fw="bolder">
-              Arguments:
-            </Text>
-            <Group>
-              <Code>data</Code>
-              <Text>Input text to augment</Text>
-            </Group>
-            <Group>
-              <Code>action</Code>
-              <Text>
-                Action to perform, in the case of using Random Delete,
-                action=Action.DELETE
-              </Text>
-            </Group>
-            <Group>
-              <Code>aug_percent</Code>
-              <Text>Percentage of words in sequence to augment</Text>
-            </Group>
-            <Group>
-              <Code>aug_min</Code>
-              <Text>Minimum number of words to augment</Text>
-            </Group>
-            <Group>
-              <Code>aug_max</Code>
-              <Text>Maximum number of words to augment</Text>
-            </Group>
-            <Group>
-              <Code>skipwords</Code>
-              <Text>List of words to skip augmentation</Text>
-            </Group>
-            <CodeHighlightTabs
-              code={[
-                {
-                  fileName: "python",
-                  code: "input = \"This is a simple example sentence for testing.\"\nrandom_aug(data=input, action=Action.CROP, aug_percent=0.3, aug_min=1, aug_max=10, skipwords=['is','a', 'for'] )",
-                  language: "python",
-                },
-                {
-                  fileName: "output",
-                  code: "('This is a simple example sentence for testing.', 'This is a sentence for testing.')",
-                  language: "python",
-                },
-              ]}
-              className="w-full rounded-sm outline-1 outline outline-slate-600"
-            />
-
-            <Divider my={2} />
-
-            <Text c="primary" size="xl" fw="bolder">
-              Example of Random Augmentation
+              Full Example of Synonym Augmentation
             </Text>
             <div
               id="exampleRNN"
@@ -459,9 +322,9 @@ export default function ExampleRandom() {
               }}
             />
             <Text c="dimmed" size="md">
-              For your reference, below is a full example of the NLarge Random
+              For your reference, below is a full example of the NLarge Synonym
               Argumentation on a dataset. This example will also function as a
-              proof of concept for the NLarge Random Augmentation. This example
+              proof of concept for the NLarge Synonym Augmentation. This example
               will be evaluating augmented datasets on RNN and LSTM based on the
               loss and accuracy metrics. We have chosen the 'rotten tomatoes'
               dataset due to it's small size that is prone to overfitting.
@@ -481,7 +344,13 @@ export default function ExampleRandom() {
               code={[
                 {
                   fileName: "python",
-                  code: "import datasets \nfrom datasets import Dataset, Features, Value, concatenate_datasets \nfrom NLarge.dataset_concat import augment_data, MODE \nfrom NLarge.pipeline import TextClassificationPipeline\nfrom NLarge.model.RNN import TextClassifierRNN, TextClassifierLSTM",
+                  code: `
+import datasets
+from datasets import Dataset, Features, Value, concatenate_datasets
+from NLarge.dataset_concat import augment_data, MODE
+from NLarge.pipeline import TextClassificationPipeline
+from NLarge.model.RNN import TextClassifierRNN, TextClassifierLSTM                  
+                  `,
                   language: "python",
                 },
               ]}
@@ -507,7 +376,7 @@ export default function ExampleRandom() {
                 {
                   fileName: "python",
                   code: `
-                  original_train_data, original_test_data = datasets.load_dataset(
+original_train_data, original_test_data = datasets.load_dataset(
 "rotten_tomatoes", split=["train", "test"]
 )  
 features = Features({"text": Value("string"), "label": Value("int64")})
@@ -537,49 +406,30 @@ original_train_data = Dataset.from_dict(
               }}
             />
             <Text c="dimmed" size="md">
-              We will be performing a 10% Random Substitute Augmentation and a
-              100% Random Substitute Augmentation on the dataset. This would
-              increase the dataset size by 10% and 100% respectively.
+              We will be performing a 100% Random Synonym Augmentation on the
+              dataset. This would increase the dataset size by 100%.
             </Text>
             <CodeHighlightTabs
               code={[
                 {
                   fileName: "python",
                   code: `
-# Augment and increase size by 10% and 100%
-percentages = {
-    MODE.RANDOM.SUBSTITUTE: 0.1,  # 10% of data for random augmentation
+# Augment and increase size by 100%
+percentage= {
+    MODE.SYNONYM.WORDNET: 1.00,
 }
-augmented_data_list_10 = augment_data(original_train_data, percentages)
-
-percentages = {
-    MODE.RANDOM.SUBSTITUTE: 1.0,  # 100% of data for random augmentation
-}
-augmented_data_list_100 = augment_data(original_train_data, percentages)
-
+augmented_synonym_100 = augment_data(original_train_data, percentage)
 
 # Convert augmented data into Datasets
-augmented_dataset_10 = Dataset.from_dict(
-    {
-        "text": [item["text"] for item in augmented_data_list_10],
-        "label": [item["label"] for item in augmented_data_list_10],
-    },
-    features=features,
-)
-
 augmented_dataset_100 = Dataset.from_dict(
     {
-        "text": [item["text"] for item in augmented_data_list_100],
-        "label": [item["label"] for item in augmented_data_list_100],
+        "text": [item["text"] for item in augmented_synonym_100],
+        "label": [item["label"] for item in augmented_synonym_100],
     },
     features=features,
 )
 
 # Concatenate original and augmented datasets
-augmented_train_data_10 = concatenate_datasets(
-    [original_train_data, augmented_dataset_10]
-)
-
 augmented_train_data_100 = concatenate_datasets(
     [original_train_data, augmented_dataset_100]
 )
@@ -602,16 +452,17 @@ augmented_train_data_100 = concatenate_datasets(
               }}
             />
             <Text c="dimmed" size="md">
-              Here, we will initialize and train the pipeline using RNN and the
-              augmented datasets.
+              Here, we will initialize and train a baseline RNN pipeline with
+              the un-augmented dataset and a RNN pipeline with the augmented
+              dataset.
             </Text>
             <CodeHighlightTabs
               code={[
                 {
                   fileName: "python",
                   code: `
-pipeline_augmented_10 = TextClassificationPipeline(
-    augmented_data=augmented_train_data_10,
+pipeline_baseline = TextClassificationPipeline(
+    augmented_data=original_train_data,
     test_data=original_test_data,
     max_length=128,
     test_size=0.2,
@@ -624,7 +475,7 @@ pipeline_augmented_100 = TextClassificationPipeline(
     test_size=0.2,
     model_class=TextClassifierRNN,
 )
-pipeline_augmented_10.train_model(n_epochs=10)
+pipeline_baseline.train_model(n_epochs=10)
 pipeline_augmented_100.train_model(n_epochs=10)
                   `,
                   language: "python",
