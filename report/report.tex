@@ -280,7 +280,9 @@ capabilities of NLP models.
 To evaluate the effectiveness of random methods, we conducted experiments with
 different levels of augmentation: 5\%, 10\%, and 20\% of the dataset. The
 performance of the models trained with these augmented datasets was assessed
-using accuracy score.
+using accuracy score. We will report the results using random swap augmentation
+as we saw no significant difference in the performance of the model using the
+different random augmentation methods in practice..
 
 The results of our experiments indicate that the performance of the RNN model
 keeps increasing with higher levels of augmentation. This suggests that data
@@ -289,9 +291,7 @@ Specifically, the model trained with 20\% augmented data achieved the highest
 accuracy, followed by the models trained with 10\% and 5\% augmented data.
 These findings highlight the importance of data augmentation in enhancing the
 diversity and robustness of training datasets, leading to improved model
-performance. We will report the results using random swap augmentation as we
-saw no significant difference in the performance of the model using the
-different random augmentation methods.
+performance.
 
 \begin{figure}[ht]
   \centering
@@ -828,7 +828,12 @@ One key observation was that the use of summarizers to generate augmented
 samples resulted in fewer OOV counts. This allowed the models with a static
 vocabulary to learn more effectively from the augmented data. Additionally,
 summarizers were found to be more capable of capturing the essence of the text
-and generating relevant samples compared to paraphrasing techniques.
+and generating relevant samples compared to paraphrasing techniques. The issue
+of vanishing and exploding gradients in RNNs when dealing with longer sequences
+could have been countered in practice but this could be mitigated not only by
+switching to LSTMs or limiting token lengths but also by using techniques such
+as gradient clipping during training to prevent exploding or vanishing
+gradients.
 
 Interestingly, the performance of the RNN model was generally better than that
 of the LSTM model on the Rotten Tomatoes dataset. This can be attributed to
@@ -853,6 +858,12 @@ We would also like to note that the task chosen at hand is specifically for
 sentiment classification and that the findings in this report may not translate
 to other tasks specific domains. However, we do believe that overall the use of
 DA can potentially help in the case of over-fitting NLP tasks.
+
+Future work can also consider automatic filtering metrics (e.g., perplexity or
+cosine similarity with original sentences), to ensure the augmented data is
+both diverse and meaningful when generating samples using LLMs. Additionally,
+exploring other LLM models and fine-tuning them on specific tasks could provide
+further improvements in the quality of augmented data.
 
 \subsection{Conclusion}
 
