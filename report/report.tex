@@ -1,4 +1,4 @@
-\documentclass{article}
+\documentclass[10pt]{extarticle}
 \usepackage{geometry}
 \usepackage{subcaption}
 \usepackage{parskip}
@@ -7,6 +7,17 @@
 \usepackage{amsmath}
 \usepackage{hyperref}
 \usepackage{float}
+
+% set font type
+\usepackage{anyfontsize}
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+
+% Enable single spacing
+\usepackage{setspace}
+\singlespacing
+
+
 \makeatletter
 \renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
 % display heading, like subsubsection
@@ -25,11 +36,14 @@
 \title{NLarge your dataset: Data augmentation for NLP}
 
 \author{
-  Ng Tze Kean \\
-  \texttt{ngtzekean@gmail.com}
-  \and
-  Dexter Gui \\
-  \texttt{dexter@email.com}
+    Dexter Gui \\
+    \texttt{U2121991C}
+    \and
+    Joel Chng \\
+    \texttt{U2121344D}
+    \and
+    Nalin Sharma \\
+    \texttt{U2121904E}
 }
 
 \begin{document}
@@ -40,19 +54,25 @@
   \vspace{1.5cm}
   {\huge\bfseries NLarge your dataset: Data augmentation for NLP\par}
   \vspace{0.5cm}
-  {\large NTU SC4002 Sem 1 2024\par}
+  {\large NTU SC4001 Sem 1 2024\par}
   \vspace{2cm}
-  \begin{minipage}[t]{0.45\textwidth}
-    \centering
-    {\Large Ng Tze Kean\par}
-    \texttt{ngtzekean@gmail.com}
-  \end{minipage}
-  \hfill
-  \begin{minipage}[t]{0.45\textwidth}
-    \centering
-    {\Large Dexter Gui\par}
-    \texttt{dexter@email.com}
-  \end{minipage}
+  \begin{tabular}{ccc}
+    \begin{minipage}[t]{0.3\textwidth}
+      \centering
+      {\Large Gui Zhang Yan Dexter\par}
+      \texttt{U2121991C}
+    \end{minipage} &
+    \begin{minipage}[t]{0.3\textwidth}
+      \centering
+      {\Large Joel Chng Ming Xuan\par}
+      \texttt{U2121344D}
+    \end{minipage} &
+    \begin{minipage}[t]{0.3\textwidth}
+      \centering
+      {\Large Nalin Sharma\par}
+      \texttt{U2121904E}
+    \end{minipage}
+  \end{tabular}
   \vfill
   \today
 \end{titlepage}
@@ -182,65 +202,82 @@ training data.
 
 \subsection{Random Swap}
 
-Let \( X = \{x_1, x_2, \ldots, x_n\} \) be a sequence of words in a text, where \( x_i \) represents the \( i \)-th word in the sequence.
+Let \( X = \{x_1, x_2, \ldots, x_n\} \) be a sequence of words in a text, where
+\( x_i \) represents the \( i \)-th word in the sequence.
 
 The random swap process can be defined as follows:
 
-For each word \( x_i \) in the sequence \( X \), with a probability \( p \), swap \( x_i \) with its adjacent word if \( x_i \) is not a stop word. Where \( x_j = x_{i+1} \) or \( x_j = x_{i-1} \).
+For each word \( x_i \) in the sequence \( X \), with a probability \( p \),
+swap \( x_i \) with its adjacent word if \( x_i \) is not a stop word. Where \(
+x_j = x_{i+1} \) or \( x_j = x_{i-1} \).
 
 \[
   x_i' =
   \begin{cases}
-    \mathrm{swap}(x_i, x_j) & \mathrm{with\ probability\ } p \\
-    x_i & \mathrm{with\ probability\ } 1 - p
+    \mathrm{swap}(x_i, x_j) & \mathrm{with\ probability\ } p     \\
+    x_i                     & \mathrm{with\ probability\ } 1 - p
   \end{cases}
 \]
 
-where \( x_i' \) is the new word after swap. The augmented sequence \( X' = \{x_1', x_2', \ldots, x_n'\} \) is then used as the new training sample.
+where \( x_i' \) is the new word after swap. The augmented sequence \( X' =
+\{x_1', x_2', \ldots, x_n'\} \) is then used as the new training sample.
 
-The random swap process involves iterating over each word in the sequence and swapping with a predefined probability \( p \). This introduces variability into the dataset, potentially improving the robustness and generalization capabilities of NLP models.
+The random swap process involves iterating over each word in the sequence and
+swapping with a predefined probability \( p \). This introduces variability
+into the dataset, potentially improving the robustness and generalization
+capabilities of NLP models.
 
 \subsection{Random Substitution}
 
 The random substitution process can be defined as follows:
 
-For each word \( x_i \) in the sequence \( X \), with a probability \( p \), replace \( x_i \) with a randomly chosen word from the vocabulary \( V \).
+For each word \( x_i \) in the sequence \( X \), with a probability \( p \),
+replace \( x_i \) with a randomly chosen word from the vocabulary \( V \).
 
 \[
   x_i' =
   \begin{cases}
-    \mathrm{random}(V) & \mathrm{with\ probability\ } p \\
-    x_i & \mathrm{with\ probability\ } 1 - p
+    \mathrm{random}(V) & \mathrm{with\ probability\ } p     \\
+    x_i                & \mathrm{with\ probability\ } 1 - p
   \end{cases}
 \]
 
-where \( x_i' \) is the new word after substitution, and \( \mathrm{random}(V) \) denotes a randomly selected word from the vocabulary \( V \). The augmented sequence \( X' = \{x_1', x_2', \ldots, x_n'\} \) is then used as the new training sample.
+where \( x_i' \) is the new word after substitution, and \( \mathrm{random}(V)
+\) denotes a randomly selected word from the vocabulary \( V \). The augmented
+sequence \( X' = \{x_1', x_2', \ldots, x_n'\} \) is then used as the new
+training sample.
 
-The random substitution process introduces variability into the dataset by replacing words with random words from the vocabulary, potentially improving the robustness and generalization capabilities of NLP models.
+The random substitution process introduces variability into the dataset by
+replacing words with random words from the vocabulary, potentially improving
+the robustness and generalization capabilities of NLP models.
 
 \subsection{Random Deletion}
 
 The random deletion process can be defined as follows:
 
-For each word \( x_i \) in the sequence \( X \), with a probability \( p \), delete \( x_i \) from the sequence.
+For each word \( x_i \) in the sequence \( X \), with a probability \( p \),
+delete \( x_i \) from the sequence.
 
 \[
   x_i' =
   \begin{cases}
-    \emptyset & \mathrm{with\ probability\ } p \\
-    x_i & \mathrm{with\ probability\ } 1 - p
+    \emptyset & \mathrm{with\ probability\ } p     \\
+    x_i       & \mathrm{with\ probability\ } 1 - p
   \end{cases}
 \]
 
-where \( x_i' \) is the new word after deletion, and \( \emptyset \) denotes the deletion of the word. The augmented sequence \( X' = \{x_1', x_2', \ldots, x_n'\} \) is then used as the new training sample.
+where \( x_i' \) is the new word after deletion, and \( \emptyset \) denotes
+the deletion of the word. The augmented sequence \( X' = \{x_1', x_2', \ldots,
+x_n'\} \) is then used as the new training sample.
 
-The random deletion process introduces variability into the dataset by randomly removing words, potentially improving the robustness and generalization capabilities of NLP models.
-
+The random deletion process introduces variability into the dataset by randomly
+removing words, potentially improving the robustness and generalization
+capabilities of NLP models.
 
 \subsection{Results and Analysis}
 
-To evaluate the effectiveness of random methods, we conducted experiments
-with different levels of augmentation: 5\%, 10\%, and 20\% of the dataset. The
+To evaluate the effectiveness of random methods, we conducted experiments with
+different levels of augmentation: 5\%, 10\%, and 20\% of the dataset. The
 performance of the models trained with these augmented datasets was assessed
 using accuracy score.
 
@@ -251,9 +288,9 @@ Specifically, the model trained with 20\% augmented data achieved the highest
 accuracy, followed by the models trained with 10\% and 5\% augmented data.
 These findings highlight the importance of data augmentation in enhancing the
 diversity and robustness of training datasets, leading to improved model
-performance. We will report the results using random swap augmentation as we saw
-no significant difference in the performance of the model using the different
-random augmentation methods.
+performance. We will report the results using random swap augmentation as we
+saw no significant difference in the performance of the model using the
+different random augmentation methods.
 
 \begin{figure}[ht]
   \centering
@@ -281,19 +318,20 @@ random augmentation methods.
 The observed trend, where the performance of the RNN model improves with higher
 levels of data augmentation, can be attributed to several key factors. Firstly,
 data augmentation techniques like random swap introduce increased data
-diversity by exposing the model to a wider range of sentence
-structures. This diversity helps the model learn more robust representations,
-enhancing its ability to generalize to unseen examples.
+diversity by exposing the model to a wider range of sentence structures. This
+diversity helps the model learn more robust representations, enhancing its
+ability to generalize to unseen examples.
 
 Secondly, data augmentation mitigates over-fitting by effectively increasing
 the size of the training dataset, reducing the likelihood of the model
 memorizing specific examples and encouraging it to learn general patterns
 instead. Additionally, the introduction of variations in the training data
 makes the model more robust to noise and variations in real-world input data.
-This robustness is crucial for achieving good performance on unseen data. An example
-would be a change in the sentence structure from \code{I love this movie} to
-\code{I movie this love}. which can help the model learn patterns that might be
-found in the human speech patterns and thus generalize better on the test data.
+This robustness is crucial for achieving good performance on unseen data. An
+example would be a change in the sentence structure from \code{I love this
+  movie} to \code{I movie this love}. which can help the model learn patterns
+that might be found in the human speech patterns and thus generalize better on
+the test data.
 
 Furthermore, data augmentation acts as a form of regularization, preventing the
 model from becoming too complex and over-fitting the training data. By
@@ -391,9 +429,9 @@ extreme DA (Figure \ref{fig:random_extreme_substitution_acc},
   \end{subfigure}
   \hfill
   \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{img/random_100.png}
+    \includegraphics[width=\textwidth]{img/random_200.png}
     \caption{200\% Augmentation}
-    \label{fig:random_100}
+    \label{fig:random_200}
   \end{subfigure}
   \caption{Accuracy graphs for random augmentation DA at 50\%, 100\%, and 200\% levels.}
   \label{fig:random_extreme_substitution_acc}
@@ -414,9 +452,9 @@ extreme DA (Figure \ref{fig:random_extreme_substitution_acc},
   \end{subfigure}
   \hfill
   \begin{subfigure}[b]{0.3\textwidth}
-    \includegraphics[width=\textwidth]{img/synonym_100.png}
+    \includegraphics[width=\textwidth]{img/synonym_200.png}
     \caption{200\% Augmentation}
-    \label{fig:synonym_100}
+    \label{fig:synonym_200}
   \end{subfigure}
   \caption{Accuracy graphs for synonym augmentation DA at 50\%, 100\%, and 200\% levels.}
   \label{fig:synonym_extreme_substitution_acc}
