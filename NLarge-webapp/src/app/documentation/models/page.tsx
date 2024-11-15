@@ -50,46 +50,103 @@ export default function DocumentationModel() {
                 layers such as LSTM, GRU, and vanilla RNN.
               </Text>
               <Divider my={2} />
+
               <Text c="primary" size="lg" fw="bolder">
                 <Code bg="dimmed" fz="lg">
-                  attention.py
+                  RNN.py
                 </Code>
               </Text>
               <Text c="dimmed" size="md">
-                This module provides attention-based models for text
-                classification.
+                This module offers models based on a vanilla RNN for text
+                classification, providing alternatives with and without max
+                pooling.
               </Text>
 
               <Text c="primary" size="md" fw="bolder">
-                1. TextClassifierAttentionNetwork
+                1. TextClassifierRNN
               </Text>
               <Text c="dimmed" size="md">
-                Implements a basic attention mechanism with query, key, and
-                value layers. The model calculates attention weights, aggregates
-                them to form a context vector, and then applies a fully
-                connected layer followed by a sigmoid activation for binary
-                classification.
+                A simple RNN-based classifier, utilizing a fully connected layer
+                after the final hidden state for sequence classification.
+                Suitable for shorter sequences where RNN limitations, such as
+                gradient vanishing, are less significant.
               </Text>
 
               <Text c="primary" size="md" fw="bolder">
-                2. MultiHeadAttention
+                2. TextClassifierRNNMaxPool
               </Text>
               <Text c="dimmed" size="md">
-                A multi-head attention layer that splits the input into multiple
-                heads to capture various aspects of the input representation,
-                making it effective in handling complex relationships in the
-                input sequence.
+                Extends <Code bg="dimmed">TextClassifierRNN</Code> by applying a
+                max-pooling operation over the RNN outputs. This version can
+                better capture the most relevant features across the entire
+                sequence.
               </Text>
 
               <Text c="primary" size="md" fw="bolder">
-                3. TextClassifierMultiHeadAttentionNetwork
+                Example Usage:
+              </Text>
+              <CodeHighlightTabs
+                code={[
+                  {
+                    fileName: "python",
+                    code: `
+# Import pipeline and Model
+from NLarge.pipeline import TextClassificationPipeline
+from NLarge.model.RNN import TextClassifierRNN 
+
+# Initialize Pipeline
+pipeline_augmented = TextClassificationPipeline(
+    augmented_data=augmented_train_data,
+    test_data=original_test_data,
+    max_length=128,
+    test_size=0.2,
+    model_class=TextClassifierRNN,
+)
+                    `,
+                    language: "python",
+                  },
+                ]}
+                className="w-full rounded-sm outline-1 outline outline-slate-600"
+              />
+
+              <Divider my={2} />
+
+              <Text c="primary" size="lg" fw="bolder">
+                <Code bg="dimmed" fz="lg">
+                  LSTM.py
+                </Code>
               </Text>
               <Text c="dimmed" size="md">
-                Uses the <Code bg="dimmed">MultiHeadAttention</Code> class for
-                multi-head attention followed by a fully connected layer for
-                classification. It aggregates attention across multiple heads to
-                increase model interpretability and capture richer
-                sequence-level information.
+                This module provides LSTM-based models for text classification,
+                with and without attention mechanisms.
+              </Text>
+
+              <Text c="primary" size="md" fw="bolder">
+                1. TextClassifierLSTM
+              </Text>
+              <Text c="dimmed" size="md">
+                Implements a bidirectional LSTM classifier, where the final
+                hidden state of the sequence is passed to a fully connected
+                layer for binary classification.
+              </Text>
+
+              <Text c="primary" size="md" fw="bolder">
+                2. Attention
+              </Text>
+              <Text c="dimmed" size="md">
+                An attention layer for use with LSTM outputs. It computes
+                attention scores for each step in the sequence, providing a
+                weighted sum of hidden states based on their importance.
+              </Text>
+
+              <Text c="primary" size="md" fw="bolder">
+                3. TextClassifierLSTMWithAttention
+              </Text>
+              <Text c="dimmed" size="md">
+                An LSTM classifier incorporating the attention mechanism. It
+                uses a bidirectional LSTM to capture contextual information,
+                followed by attention to highlight critical sequence components,
+                which enhances interpretability.
               </Text>
               <Text c="primary" size="md" fw="bolder">
                 Example Usage:
@@ -101,7 +158,7 @@ export default function DocumentationModel() {
                     code: `
 # Import pipeline and Model
 from NLarge.pipeline import TextClassificationPipeline
-from NLarge.model.Attention import MultiHeadAttention 
+from NLarge.model.LSTM import TextClassifierLSTMWithAttention 
 
 # Initialize Pipeline
 pipeline_augmented = TextClassificationPipeline(
@@ -109,7 +166,7 @@ pipeline_augmented = TextClassificationPipeline(
     test_data=original_test_data,
     max_length=128,
     test_size=0.2,
-    model_class=MultiHeadAttention,
+    model_class=TextClassifierLSTMWithAttention,
 )
                     `,
                     language: "python",
@@ -119,6 +176,7 @@ pipeline_augmented = TextClassificationPipeline(
               />
 
               <Divider my={2} />
+
               <Text c="primary" size="lg" fw="bolder">
                 <Code bg="dimmed" fz="lg">
                   GRU.py
@@ -185,42 +243,47 @@ pipeline_augmented = TextClassificationPipeline(
               />
 
               <Divider my={2} />
+
               <Text c="primary" size="lg" fw="bolder">
                 <Code bg="dimmed" fz="lg">
-                  LSTM.py
+                  attention.py
                 </Code>
               </Text>
               <Text c="dimmed" size="md">
-                This module provides LSTM-based models for text classification,
-                with and without attention mechanisms.
+                This module provides attention-based models for text
+                classification.
               </Text>
 
               <Text c="primary" size="md" fw="bolder">
-                1. TextClassifierLSTM
+                1. TextClassifierAttentionNetwork
               </Text>
               <Text c="dimmed" size="md">
-                Implements a bidirectional LSTM classifier, where the final
-                hidden state of the sequence is passed to a fully connected
-                layer for binary classification.
+                Implements a basic attention mechanism with query, key, and
+                value layers. The model calculates attention weights, aggregates
+                them to form a context vector, and then applies a fully
+                connected layer followed by a sigmoid activation for binary
+                classification.
               </Text>
 
               <Text c="primary" size="md" fw="bolder">
-                2. Attention
+                2. MultiHeadAttention
               </Text>
               <Text c="dimmed" size="md">
-                An attention layer for use with LSTM outputs. It computes
-                attention scores for each step in the sequence, providing a
-                weighted sum of hidden states based on their importance.
+                A multi-head attention layer that splits the input into multiple
+                heads to capture various aspects of the input representation,
+                making it effective in handling complex relationships in the
+                input sequence.
               </Text>
 
               <Text c="primary" size="md" fw="bolder">
-                3. TextClassifierLSTMWithAttention
+                3. TextClassifierMultiHeadAttentionNetwork
               </Text>
               <Text c="dimmed" size="md">
-                An LSTM classifier incorporating the attention mechanism. It
-                uses a bidirectional LSTM to capture contextual information,
-                followed by attention to highlight critical sequence components,
-                which enhances interpretability.
+                Uses the <Code bg="dimmed">MultiHeadAttention</Code> class for
+                multi-head attention followed by a fully connected layer for
+                classification. It aggregates attention across multiple heads to
+                increase model interpretability and capture richer
+                sequence-level information.
               </Text>
               <Text c="primary" size="md" fw="bolder">
                 Example Usage:
@@ -232,7 +295,7 @@ pipeline_augmented = TextClassificationPipeline(
                     code: `
 # Import pipeline and Model
 from NLarge.pipeline import TextClassificationPipeline
-from NLarge.model.LSTM import TextClassifierLSTMWithAttention 
+from NLarge.model.Attention import MultiHeadAttention 
 
 # Initialize Pipeline
 pipeline_augmented = TextClassificationPipeline(
@@ -240,66 +303,7 @@ pipeline_augmented = TextClassificationPipeline(
     test_data=original_test_data,
     max_length=128,
     test_size=0.2,
-    model_class=TextClassifierLSTMWithAttention,
-)
-                    `,
-                    language: "python",
-                  },
-                ]}
-                className="w-full rounded-sm outline-1 outline outline-slate-600"
-              />
-
-              <Divider my={2} />
-              <Text c="primary" size="lg" fw="bolder">
-                <Code bg="dimmed" fz="lg">
-                  RNN.py
-                </Code>
-              </Text>
-              <Text c="dimmed" size="md">
-                This module offers models based on a vanilla RNN for text
-                classification, providing alternatives with and without max
-                pooling.
-              </Text>
-
-              <Text c="primary" size="md" fw="bolder">
-                1. TextClassifierRNN
-              </Text>
-              <Text c="dimmed" size="md">
-                A simple RNN-based classifier, utilizing a fully connected layer
-                after the final hidden state for sequence classification.
-                Suitable for shorter sequences where RNN limitations, such as
-                gradient vanishing, are less significant.
-              </Text>
-
-              <Text c="primary" size="md" fw="bolder">
-                2. TextClassifierRNNMaxPool
-              </Text>
-              <Text c="dimmed" size="md">
-                Extends <Code bg="dimmed">TextClassifierRNN</Code> by applying a
-                max-pooling operation over the RNN outputs. This version can
-                better capture the most relevant features across the entire
-                sequence.
-              </Text>
-
-              <Text c="primary" size="md" fw="bolder">
-                Example Usage:
-              </Text>
-              <CodeHighlightTabs
-                code={[
-                  {
-                    fileName: "python",
-                    code: `
-# Import pipeline and Model
-from NLarge.pipeline import TextClassificationPipeline
-from NLarge.model.RNN import TextClassifierRNN 
-
-# Initialize Pipeline
-pipeline_augmented = TextClassificationPipeline(
-    augmented_data=augmented_train_data,
-    test_data=original_test_data,
-    max_length=128,
-    test_size=0.2,
-    model_class=TextClassifierRNN,
+    model_class=MultiHeadAttention,
 )
                     `,
                     language: "python",
