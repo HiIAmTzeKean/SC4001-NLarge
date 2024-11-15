@@ -80,7 +80,7 @@ You can access the PiPy page of the project from the link here:
 [pypi page](https://pypi.org/project/NLarge/)
 
 Our github repository can be found here:
-[github page](https://github.com/HiIAmTzeKean/SC4001)
+[github page](https://github.com/HiIAmTzeKean/SC4001-NLarge)
 
 ## Contributing
 
