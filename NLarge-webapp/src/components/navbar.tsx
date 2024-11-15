@@ -35,9 +35,11 @@ export function NavBar() {
       </Anchor>
       <Group>
         <ColorSchemesSwitcher />
-        <Button variant="outline" size="compact-md" color="secondary">
-          <GitHubLogoIcon />
-        </Button>
+        <Link href="https://github.com/dextergui/SC4001-NLarge">
+          <Button variant="outline" size="compact-md" color="secondary">
+            <GitHubLogoIcon />
+          </Button>{" "}
+        </Link>
         <Link href="/documentation">
           <Button variant="outline" size="compact-md" color="secondary">
             <IconBook2 />
