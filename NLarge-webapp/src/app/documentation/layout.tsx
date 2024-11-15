@@ -33,7 +33,7 @@ export default function DocumentationLayout({
             childrenOffset={rem(14)}
             defaultOpened
             variant="subtle"
-            active={isActiveLink("/documentation/[^/examples][sS]*")}
+            active={isActiveLink("^/documentation/(?!examples/).+")}
           >
             <NavLink
               label="Installation"
@@ -68,7 +68,7 @@ export default function DocumentationLayout({
             childrenOffset={rem(14)}
             defaultOpened
             variant="subtle"
-            active={isActiveLink("/documentation/[/examples]+")}
+            active={isActiveLink("^/documentation/examples/.+")}
           >
             <NavLink
               label="Random Augmentation"

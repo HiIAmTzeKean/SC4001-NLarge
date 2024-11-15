@@ -45,7 +45,10 @@ export default function DocumentationUsage() {
                 example, we will be importing the synonym augmenter, you may
                 find the usage guide of other augmentation types:
               </Text>
-              <Link href="/documentation/examples/random" className="flex ml-6">
+              <Link
+                href="/documentation/examples/random"
+                className="flex ml-6 hover:text-primary"
+              >
                 -
                 <Text className="ml-2 underline" ff="monospace" size="sm">
                   Random Augmenter
@@ -53,14 +56,17 @@ export default function DocumentationUsage() {
               </Link>
               <Link
                 href="/documentation/examples/synonym"
-                className="flex ml-6"
+                className="flex ml-6 hover:text-primary"
               >
                 -
                 <Text className="ml-2 underline" ff="monospace" size="sm">
                   Synonym Augmenter
                 </Text>
               </Link>
-              <Link href="/documentation/examples/llm" className="flex ml-6">
+              <Link
+                href="/documentation/examples/llm"
+                className="flex ml-6 hover:text-primary"
+              >
                 -
                 <Text className="ml-2 underline" ff="monospace" size="sm">
                   Large Language Model (LLM) Augmenter
@@ -109,7 +115,10 @@ export default function DocumentationUsage() {
                 required for each augmenter function, you may view them in the
                 usage guide of other augmentation types:
               </Text>
-              <Link href="/documentation/examples/random" className="flex ml-6">
+              <Link
+                href="/documentation/examples/random"
+                className="flex ml-6 hover:text-primary"
+              >
                 -
                 <Text className="ml-2 underline" ff="monospace" size="sm">
                   Random Augmenter
@@ -117,14 +126,17 @@ export default function DocumentationUsage() {
               </Link>
               <Link
                 href="/documentation/examples/synonym"
-                className="flex ml-6"
+                className="flex ml-6 hover:text-primary"
               >
                 -
                 <Text className="ml-2 underline" ff="monospace" size="sm">
                   Synonym Augmenter
                 </Text>
               </Link>
-              <Link href="/documentation/examples/llm" className="flex ml-6">
+              <Link
+                href="/documentation/examples/llm"
+                className="flex ml-6 hover:text-primary"
+              >
                 -
                 <Text className="ml-2 underline" ff="monospace" size="sm">
                   Large Language Model (LLM) Augmenter
@@ -173,14 +185,15 @@ export default function DocumentationUsage() {
                 options. If you wish to perform augmenter on a dataset level,
                 you would need to create helper functions to do so. You may find
                 an example helper function to augment and enlarge the dataset in
-                the helper functions guide below:
-              </Text>
-              <Link href="/documentation/helper" className=" flex ml-6">
-                -
-                <Text className="ml-2 underline" ff="monospace" size="sm">
+                the helper functions guide in
+                <Link
+                  href="/documentation/helper"
+                  className="underline ml-1 text-white hover:text-primary"
+                >
                   Augmenting Datasets
-                </Text>
-              </Link>
+                </Link>
+                .
+              </Text>
 
               <Divider my={2} />
             </Stack>

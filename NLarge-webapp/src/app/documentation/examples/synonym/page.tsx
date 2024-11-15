@@ -417,8 +417,8 @@ pipeline_augmented_5.train_model(n_epochs=10)
 pipeline_augmented_10.train_model(n_epochs=10)
 
 # Plot Loss 
-pipeline_augmented_5.plot_loss(title="50% Synonym Augment on LSTM")
-pipeline_augmented_10.plot_loss(title="200% Synonym Augment on LSTM")
+pipeline_augmented_5.plot_loss(title="5% Synonym Augment on LSTM")
+pipeline_augmented_10.plot_loss(title="10% Synonym Augment on LSTM")
 
 # Plot Accuracy
 pipeline_augmented_5.plot_acc(title="5% Synonym Augment on LSTM")
