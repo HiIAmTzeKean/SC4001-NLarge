@@ -1,5 +1,8 @@
 "use client";
 import {
+  AppShell,
+  AppShellHeader,
+  AppShellSection,
   ColorSchemeScript,
   createTheme,
   DEFAULT_THEME,
@@ -9,6 +12,7 @@ import {
 } from "@mantine/core";
 import localFont from "next/font/local";
 import "./globals.css";
+import { NavBar } from "@/components/navbar";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -251,7 +255,12 @@ export default function RootLayout({
           theme={theme}
           withGlobalClasses
         >
-          {children}
+          <AppShell header={{ height: 60 }} padding="md">
+            <AppShellHeader>
+              <NavBar />
+            </AppShellHeader>
+            <AppShellSection>{children}</AppShellSection>
+          </AppShell>
         </MantineProvider>
       </body>
     </html>
